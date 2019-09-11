@@ -7,8 +7,8 @@
 
 ### Preview
 
-[dropdown-area](http://fe.jimu.io/meson-display/#/dropdown-area)
-[dropdown-menu](http://fe.jimu.io/meson-display/#/dropdown-menu)
+[dropdown-area](http://fe.jimu.io/dropdown/#/dropdown-area)
+[dropdown-menu](http://fe.jimu.io/dropdown/#/dropdown-menu)
 
 ### Usage
 
@@ -18,7 +18,7 @@ yarn add @jimengio/dropdown
 
 * Dropdown area
 
-Demos http://fe.jimu.io/meson-display/#/dropdown-area
+Demos http://fe.jimu.io/dropdown/#/dropdown-area
 
 ```tsx
 import { DropdownArea } from "@jimengio/dropdown"
