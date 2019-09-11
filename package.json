@@ -14,7 +14,7 @@
     "serve": "http-server dist/ -s",
     "compile": "tsc -d --project tsconfig-compile.json --outDir lib/",
     "prepare": "yarn compile",
-    "upload": "rsync -avr --progress dist/ fe.jimu.io:~/repo/jimengio/meson-display",
+    "upload": "rsync -avr --progress dist/ fe.jimu.io:~/repo/jimengio/dropdown",
     "gen-router": "ts-node -P tsconfig-node.json -r tsconfig-paths/register example/gen-router.ts",
     "postinstall": "rm -rfv node_modules/@types/*/node_modules/@types/react"
   },
