@@ -1,6 +1,6 @@
 {
   "name": "@jimengio/dropdown",
-  "version": "0.1.0",
+  "version": "0.1.11-alpha",
   "description": "",
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
@@ -18,7 +18,15 @@
     "gen-router": "ts-node -P tsconfig-node.json -r tsconfig-paths/register example/gen-router.ts",
     "postinstall": "rm -rfv node_modules/@types/*/node_modules/@types/react"
   },
-  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jimengio/dropdown.git"
+  },
+  "keywords": [
+    "react",
+    "react-component",
+    "dropdown"
+  ],
   "author": "jimengio",
   "license": "MIT",
   "devDependencies": {

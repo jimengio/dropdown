@@ -1,5 +1,6 @@
 ## Meson Dropdown
 
+[![npm](https://img.shields.io/npm/v/@jimengio/dropdown)](https://www.npmjs.com/package/@jimengio/dropdown)
 
 > A collection of components of displaying information.
 
