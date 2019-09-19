@@ -9,7 +9,7 @@ let containerName = "meson-dropdown-container";
 
 import React, { FC, useEffect, useState, ReactNode, CSSProperties, useRef } from "react";
 import ReactDOM from "react-dom";
-import { rowParted, column } from "@jimengio/shared-utils/lib/layout";
+import { rowParted, column } from "@jimengio/flex-styles";
 
 type FuncVoid = () => void;
 

@@ -101,6 +101,11 @@
   resolved "https://registry.npmjs.org/@jimengio/fa-icons/-/fa-icons-0.2.0.tgz#50cfe599ee4c9ab70e780be4ddc6dc78d8bd33a8"
   integrity sha512-QpSuslOYU+cHgWNlwtQCRxHQVsm4cyzxbjeItf9NH0tW85RveNs1mJvkCD9CndehOXn04eoqxKA+Mwhju0UDaQ==
 
+"@jimengio/flex-styles@^0.1.5":
+  version "0.1.5"
+  resolved "https://registry.npmjs.org/@jimengio/flex-styles/-/flex-styles-0.1.5.tgz#610452f1a7e445fdec33e2d8180d49122671238d"
+  integrity sha512-97X8vD2FPSBf2bqOrWIz60OgBxpdcdsxbGB2TU3xulv0cP8Vezd6s/mYvPIssX3hpqMXl1983SKlrJwgi294AQ==
+
 "@jimengio/jimo-icons@^0.1.26":
   version "0.1.26"
   resolved "https://registry.npmjs.org/@jimengio/jimo-icons/-/jimo-icons-0.1.26.tgz#71e7efc72734ede7c35e09cf034fa3df731518d0"
@@ -123,10 +128,10 @@
   resolved "https://registry.npmjs.org/@jimengio/safe-property/-/safe-property-0.0.2.tgz#62d824660a56a6eb29628c1c795b256b9639743b"
   integrity sha512-3MNHoTL2lZGtdsoleHIfKpx2+IE9uKHy9ac3jh/7Jn9eCvw7M1SG73o2n71kJTVX2CPqrdLRTg5tB6tLJrCp1A==
 
-"@jimengio/shared-utils@^0.1.5-a1":
-  version "0.1.5-a1"
-  resolved "https://registry.npmjs.org/@jimengio/shared-utils/-/shared-utils-0.1.5-a1.tgz#15e150afed4528411c3d1437aa3f9349ebd77243"
-  integrity sha512-p79k3U39osZwiEMNO3dDO2owth1tEcPUm4u5gaA1/91zvXMLOKGWMxeV07KvCrpwgl81bfrqGmhgjYLba0+/ew==
+"@jimengio/shared-utils@^0.1.5-a2":
+  version "0.1.5-a2"
+  resolved "https://registry.npmjs.org/@jimengio/shared-utils/-/shared-utils-0.1.5-a2.tgz#9e6845c02b1d950a66e900600c94083030a627ea"
+  integrity sha512-Hn1G/sSnoop940+Ctux7bR6DwdX0wuxGIidhnDscturzKQ5ogFehzcBLcOqi9Dg52VgwugVh+mRnZ6PB/6j7fA==
   dependencies:
     fuzzysearch "^1.0.3"
 
