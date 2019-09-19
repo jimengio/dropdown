@@ -3,7 +3,7 @@ import { css, cx } from "emotion";
 import DropdownArea from "./dropdown-area";
 import MenuList, { MenuValue, IMenuListItem } from "./menu-list";
 import FaIcon, { EFaIcon } from "@jimengio/fa-icons";
-import { rowParted, center, expand } from "@jimengio/shared-utils";
+import { rowParted, center, expand } from "@jimengio/flex-styles";
 import JimoIcon, { EJimoIcon } from "@jimengio/jimo-icons";
 
 let DropdownMenu: FC<{
