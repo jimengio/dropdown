@@ -2,6 +2,9 @@ import React, { FC, useState } from "react";
 import { css } from "emotion";
 import MenuList, { IMenuListItem } from "../../src/menu-list";
 import DropdownMenu from "../../src/dropdown-menu";
+import { DocDemo } from "@jimengio/doc-frame";
+
+let link = "https://github.com/jimengio/dropdown/blob/master/example/pages/demo-dropdown-menu.tsx";
 
 let DemoDropdownMenu: FC<{}> = (props) => {
   let [selected, setSelected] = useState<string>(null);
@@ -31,12 +34,13 @@ let DemoDropdownMenu: FC<{}> = (props) => {
 
   return (
     <div className={styleContainer}>
-      <div className={styleBlock}>
+      <DocDemo title="Menu example" link={link}>
         <div className={styleMenuArea}>
           <MenuList value={selected} items={items} onSelect={(value) => setSelected(value as string)} />
         </div>
-      </div>
-      <div className={styleBlock}>
+      </DocDemo>
+
+      <DocDemo title="Dropdown menu" link={link}>
         <DropdownMenu
           allowClear
           className={styleShortInput}
@@ -45,13 +49,15 @@ let DemoDropdownMenu: FC<{}> = (props) => {
           onSelect={(value) => setSelected(value as string)}
           placeholder={"请选择"}
         />
-      </div>
-      <div className={styleBlock}>
+      </DocDemo>
+
+      <DocDemo title="Disabled menu" link={link}>
         <DropdownMenu disabled value={selected} items={items} onSelect={(value) => setSelected(value as string)} placeholder={"请选择"} />
-      </div>
-      <div className={styleBlock}>
+      </DocDemo>
+
+      <DocDemo title={"Empty locale"} link={link}>
         <DropdownMenu value={selected} items={[]} onSelect={(value) => setSelected(value as string)} placeholder={"请选择"} emptyLocale={"没有数据"} />
-      </div>
+      </DocDemo>
     </div>
   );
 };
@@ -59,10 +65,6 @@ let DemoDropdownMenu: FC<{}> = (props) => {
 export default DemoDropdownMenu;
 
 let styleContainer = null;
-
-let styleBlock = css`
-  padding: 20px;
-`;
 
 let styleMenuArea = css`
   width: 200px;

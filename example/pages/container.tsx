@@ -1,7 +1,7 @@
 import React from "react";
 import { parseRoutePath, IRouteParseResult } from "@jimengio/ruled-router";
 import { css, cx } from "emotion";
-import { row, fullHeight, fullscreen } from "@jimengio/flex-styles";
+import { row, fullHeight, fullscreen, expand } from "@jimengio/flex-styles";
 
 import Home from "./home";
 import Content from "./content";
@@ -60,13 +60,17 @@ let onSwitch = (path: string) => {
 export default (props: { router: IRouteParseResult }) => {
   return (
     <div className={cx(row, fullscreen, styleContainer)}>
-      <DocSidebar currentPath={props.router.name} items={items} onSwitch={(item) => onSwitch(item.path)} />
+      <DocSidebar title="Dropdown" currentPath={props.router.name} items={items} onSwitch={(item) => onSwitch(item.path)} />
       <div style={{ width: 20 }} />
-      {renderChildPage(props.router)}
+      <div className={cx(expand, stylePage)}>{renderChildPage(props.router)}</div>
     </div>
   );
 };
 
 const styleContainer = css`
   font-family: "Helvetica";
+`;
+
+let stylePage = css`
+  padding: 40px;
 `;
