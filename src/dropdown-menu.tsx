@@ -15,6 +15,7 @@ let DropdownMenu: FC<{
   itemClassName?: string;
   placeholder?: string;
   emptyLocale?: string;
+  placeholderClassName?: string;
   menuWidth?: number;
   disabled?: boolean;
   allowClear?: boolean;
@@ -29,7 +30,7 @@ let DropdownMenu: FC<{
     () => (
       <div className={cx(rowParted, styleContainer, props.disabled ? styleDisabled : null, props.className)}>
         <span className={cx(styleValue)}>
-          {selectedItem ? selectedItem.title : <span className={stylePlaceholder}>{props.placeholder || "Please select"}</span>}
+          {selectedItem ? selectedItem.title : <span className={cx(stylePlaceholder, props.placeholderClassName)}>{props.placeholder || "Please select"}</span>}
         </span>
         <FaIcon name={EFaIcon.AngleDown} className={styleIcon} />
         {props.allowClear && selectedItem != null ? (
@@ -89,6 +90,7 @@ let styleContainer = css`
   min-width: 120px;
   display: inline-flex;
   position: relative;
+  background-color: white;
 
   &:hover i.jimo {
     opacity: 1;
@@ -117,6 +119,7 @@ let styleRemoveIcon = css`
 
   &:hover {
     color: hsla(0, 0%, 0%, 0.5);
+    opacity: 1;
   }
 `;
 let styleDisabled = css`

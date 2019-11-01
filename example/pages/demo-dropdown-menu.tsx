@@ -58,6 +58,17 @@ let DemoDropdownMenu: FC<{}> = (props) => {
       <DocDemo title={"Empty locale"} link={link}>
         <DropdownMenu value={selected} items={[]} onSelect={(value) => setSelected(value as string)} placeholder={"请选择"} emptyLocale={"没有数据"} />
       </DocDemo>
+
+      <DocDemo title={"自定义 placeholder 样式"} link={link}>
+        <DropdownMenu
+          value={selected}
+          items={items}
+          onSelect={(value) => setSelected(value as string)}
+          placeholder={"请选择"}
+          emptyLocale={"没有数据"}
+          placeholderClassName={stylePlaceholder}
+        />
+      </DocDemo>
     </div>
   );
 };
@@ -72,4 +83,8 @@ let styleMenuArea = css`
 
 let styleShortInput = css`
   width: 160px;
+`;
+
+let stylePlaceholder = css`
+  color: red;
 `;
