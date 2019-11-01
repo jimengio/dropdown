@@ -12,6 +12,8 @@ function qsStringify(queries: { [k: string]: string }) {
 
 // generated
 
+// Generated with router-code-generator@0.2.4
+
 export let genRouter = {
   home: {
     name: "home",
@@ -37,10 +39,50 @@ export let genRouter = {
     path: () => `/dropdown-menu`,
     go: () => switchPath(`/dropdown-menu`),
   },
-  _: {
+  $: {
     name: "home",
     raw: "",
     path: () => `/`,
     go: () => switchPath(`/`),
   },
 };
+
+export type GenRouterTypeMain =
+  | GenRouterTypeTree["home"]
+  | GenRouterTypeTree["content"]
+  | GenRouterTypeTree["dropdownArea"]
+  | GenRouterTypeTree["dropdownMenu"]
+  | GenRouterTypeTree["$"];
+
+export interface GenRouterTypeTree {
+  home: {
+    name: "home";
+    params: {};
+    query: {};
+    next: null;
+  };
+  content: {
+    name: "content";
+    params: {};
+    query: {};
+    next: null;
+  };
+  dropdownArea: {
+    name: "dropdown-area";
+    params: {};
+    query: {};
+    next: null;
+  };
+  dropdownMenu: {
+    name: "dropdown-menu";
+    params: {};
+    query: {};
+    next: null;
+  };
+  $: {
+    name: "home";
+    params: {};
+    query: {};
+    next: null;
+  };
+}
