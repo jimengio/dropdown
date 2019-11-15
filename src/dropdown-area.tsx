@@ -263,7 +263,7 @@ let stylePopPage = css`
   margin: auto;
   z-index: 1000; /* same as antd popups */
 
-  position: absolute;
+  position: fixed;
 
   background-color: white;
   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.16);
