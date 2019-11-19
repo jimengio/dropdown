@@ -110,9 +110,9 @@ let styleIcon = css`
 `;
 
 let styleRemoveIcon = css`
-  font-size: 10px;
+  font-size: 16px;
   position: absolute;
-  right: 12px;
+  right: 9px;
   background-color: white;
   color: hsla(0, 0%, 0%, 0.25);
   opacity: 0;
