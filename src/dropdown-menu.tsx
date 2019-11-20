@@ -45,7 +45,7 @@ let DropdownMenu: FC<{
         ) : null}
       </div>
     ),
-    [props.disabled, props.value]
+    [props.disabled, props.value, props.items]
   );
 
   if (props.disabled) {
