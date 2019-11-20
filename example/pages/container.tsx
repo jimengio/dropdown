@@ -4,24 +4,30 @@ import { css, cx } from "emotion";
 import { row, fullHeight, fullscreen, expand } from "@jimengio/flex-styles";
 
 import Home from "./home";
-import Content from "./content";
 import { HashRedirect, findRouteTarget } from "@jimengio/ruled-router/lib/dom";
-import { genRouter } from "controller/generated-router";
+import { genRouter, GenRouterTypeMain } from "controller/generated-router";
 import { DocSidebar, ISidebarEntry } from "@jimengio/doc-frame";
 import DemoDropdownArea from "./demo-dropdown-area";
 import DemoDropdownMenu from "./demo-dropdown-menu";
+import DemoContentInput from "./demo-content-input";
+import DemoMenuTree from "./demo-menu-tree";
+import DemoDropdownTree from "./demo-dropdown-tree";
 
-const renderChildPage = (routerTree: IRouteParseResult) => {
+const renderChildPage = (routerTree: GenRouterTypeMain) => {
   if (routerTree != null) {
     switch (routerTree.name) {
-      case genRouter.home.name:
+      case "home":
         return <Home />;
-      case genRouter.content.name:
-        return <Content />;
-      case genRouter.dropdownArea.name:
+      case "dropdown-area":
         return <DemoDropdownArea />;
-      case genRouter.dropdownMenu.name:
+      case "dropdown-menu":
         return <DemoDropdownMenu />;
+      case "content-input":
+        return <DemoContentInput />;
+      case "menu-tree":
+        return <DemoMenuTree />;
+      case "dropdown-tree":
+        return <DemoDropdownTree />;
       default:
         return (
           <HashRedirect to={genRouter.home.name} delay={2}>
@@ -39,12 +45,24 @@ let items: ISidebarEntry[] = [
     path: genRouter.home.name,
   },
   {
-    title: "dropdown area",
+    title: "Dropdown area",
     path: genRouter.dropdownArea.name,
   },
   {
-    title: "dropdown menu",
+    title: "Dropdown menu",
     path: genRouter.dropdownMenu.name,
+  },
+  {
+    title: "Content input",
+    path: genRouter.contentInput.name,
+  },
+  {
+    title: "Menu tree",
+    path: genRouter.menuTree.name,
+  },
+  {
+    title: "Dropdown tree",
+    path: genRouter.dropdownTree.name,
   },
 ];
 
@@ -57,7 +75,7 @@ let onSwitch = (path: string) => {
   }
 };
 
-export default (props: { router: IRouteParseResult }) => {
+export default (props: { router: GenRouterTypeMain }) => {
   return (
     <div className={cx(row, fullscreen, styleContainer)}>
       <DocSidebar title="Dropdown" currentPath={props.router.name} items={items} onSwitch={(item) => onSwitch(item.path)} />
