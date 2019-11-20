@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from "react";
+import React, { FC, useMemo, ReactNode } from "react";
 import { css, cx } from "emotion";
 import DropdownArea from "./dropdown-area";
 import MenuList, { MenuValue, IMenuListItem } from "./menu-list";
@@ -20,21 +20,27 @@ let DropdownMenu: FC<{
   menuWidth?: number;
   disabled?: boolean;
   allowClear?: boolean;
+  renderValue?: (x: any) => ReactNode;
 }> = (props) => {
   /** Methods */
   /** Effects */
   /** Renderers */
 
   let selectedItem = props.items.find((item) => item.value === props.value);
+  let content = selectedItem?.title;
+
+  if (props.value != null && props.renderValue != null) {
+    content = props.renderValue(content);
+  }
 
   let inputElement = useMemo(
     () => (
       <ContentInput
         disabled={props.disabled}
         className={props.className}
-        content={selectedItem?.title}
+        content={content}
         placeholderClassName={props.placeholderClassName}
-        placeholder={props.placeholderClassName}
+        placeholder={props.placeholder}
         allowClear={props.allowClear}
         onClear={() => {
           props.onSelect(null);
