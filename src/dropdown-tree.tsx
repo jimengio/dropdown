@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from "react";
+import React, { FC, useMemo, ReactNode } from "react";
 import { css, cx } from "emotion";
 import ContentInput from "./content-input";
 import { flatMap } from "lodash";
@@ -31,6 +31,7 @@ let DropdownTree: FC<{
   menuWidth?: number;
   disabled?: boolean;
   allowClear?: boolean;
+  renderValue?: (x: any) => ReactNode;
 }> = React.memo((props) => {
   /** Plugins */
   /** Methods */
@@ -38,13 +39,17 @@ let DropdownTree: FC<{
   /** Renderers */
 
   let selectedItem = findInTree(props.value, props.items)[0];
+  let content = selectedItem?.display;
+  if (props.renderValue && props.value != null) {
+    content = props.renderValue(content);
+  }
 
   let inputElement = useMemo(
     () => (
       <ContentInput
         disabled={props.disabled}
         className={props.className}
-        content={selectedItem?.display}
+        content={content}
         placeholderClassName={props.placeholderClassName}
         placeholder={props.placeholder}
         emptyLocale={props.emptyLocale}
@@ -54,7 +59,7 @@ let DropdownTree: FC<{
         }}
       />
     ),
-    [props.disabled, props.value, props.items]
+    [props.disabled, props.value, props.items, content]
   );
 
   if (props.disabled) {
