@@ -21,12 +21,6 @@ export let genRouter = {
     path: () => `/home`,
     go: () => switchPath(`/home`),
   },
-  content: {
-    name: "content",
-    raw: "content",
-    path: () => `/content`,
-    go: () => switchPath(`/content`),
-  },
   dropdownArea: {
     name: "dropdown-area",
     raw: "dropdown-area",
@@ -39,6 +33,24 @@ export let genRouter = {
     path: () => `/dropdown-menu`,
     go: () => switchPath(`/dropdown-menu`),
   },
+  contentInput: {
+    name: "content-input",
+    raw: "content-input",
+    path: () => `/content-input`,
+    go: () => switchPath(`/content-input`),
+  },
+  menuTree: {
+    name: "menu-tree",
+    raw: "menu-tree",
+    path: () => `/menu-tree`,
+    go: () => switchPath(`/menu-tree`),
+  },
+  dropdownTree: {
+    name: "dropdown-tree",
+    raw: "dropdown-tree",
+    path: () => `/dropdown-tree`,
+    go: () => switchPath(`/dropdown-tree`),
+  },
   $: {
     name: "home",
     raw: "",
@@ -49,20 +61,16 @@ export let genRouter = {
 
 export type GenRouterTypeMain =
   | GenRouterTypeTree["home"]
-  | GenRouterTypeTree["content"]
   | GenRouterTypeTree["dropdownArea"]
   | GenRouterTypeTree["dropdownMenu"]
+  | GenRouterTypeTree["contentInput"]
+  | GenRouterTypeTree["menuTree"]
+  | GenRouterTypeTree["dropdownTree"]
   | GenRouterTypeTree["$"];
 
 export interface GenRouterTypeTree {
   home: {
     name: "home";
-    params: {};
-    query: {};
-    next: null;
-  };
-  content: {
-    name: "content";
     params: {};
     query: {};
     next: null;
@@ -75,6 +83,24 @@ export interface GenRouterTypeTree {
   };
   dropdownMenu: {
     name: "dropdown-menu";
+    params: {};
+    query: {};
+    next: null;
+  };
+  contentInput: {
+    name: "content-input";
+    params: {};
+    query: {};
+    next: null;
+  };
+  menuTree: {
+    name: "menu-tree";
+    params: {};
+    query: {};
+    next: null;
+  };
+  dropdownTree: {
+    name: "dropdown-tree";
     params: {};
     query: {};
     next: null;

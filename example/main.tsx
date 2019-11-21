@@ -9,9 +9,10 @@ import Container from "./pages/container";
 
 import "font-awesome/css/font-awesome.min.css";
 import "./main.css";
+import { GenRouterTypeMain } from "controller/generated-router";
 
 const renderApp = () => {
-  let routerTree = parseRoutePath(window.location.hash.slice(1), routerRules);
+  let routerTree = parseRoutePath(window.location.hash.slice(1), routerRules) as GenRouterTypeMain;
 
   ReactDOM.render(<Container router={routerTree} />, document.querySelector(".app"));
 };

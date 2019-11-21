@@ -1,18 +1,29 @@
-import React, { FC, useMemo } from "react";
+import React, { FC, useMemo, ReactNode } from "react";
 import { css, cx } from "emotion";
-import DropdownArea from "./dropdown-area";
-import MenuList, { MenuValue, IMenuListItem } from "./menu-list";
-import FaIcon, { EFaIcon } from "@jimengio/fa-icons";
-import { rowParted, center, expand } from "@jimengio/flex-styles";
-import JimoIcon, { EJimoIcon } from "@jimengio/jimo-icons";
 import ContentInput from "./content-input";
+import { flatMap } from "lodash";
 
-let DropdownMenu: FC<{
-  value: MenuValue;
-  items: IMenuListItem[];
-  onSelect: (value: MenuValue) => void;
+import DropdownArea from "./dropdown-area";
+import { rowParted, center, expand } from "@jimengio/flex-styles";
+import MenuTree, { IMenuTreeItem } from "./menu-tree";
+
+let findInTree = (value: string, items: IMenuTreeItem[]): IMenuTreeItem[] => {
+  return flatMap(items, (item) => {
+    if (item.value === value) {
+      return [item];
+    } else {
+      return findInTree(value, item.children);
+    }
+  });
+};
+
+let DropdownTree: FC<{
+  value: string;
+  items: IMenuTreeItem[];
+  onSelect: (value: string) => void;
   className?: string;
   menuClassName?: string;
+  cardClassName?: string;
   itemClassName?: string;
   placeholder?: string;
   emptyLocale?: string;
@@ -20,28 +31,35 @@ let DropdownMenu: FC<{
   menuWidth?: number;
   disabled?: boolean;
   allowClear?: boolean;
-}> = (props) => {
+  renderValue?: (x: any) => ReactNode;
+}> = React.memo((props) => {
+  /** Plugins */
   /** Methods */
   /** Effects */
   /** Renderers */
 
-  let selectedItem = props.items.find((item) => item.value === props.value);
+  let selectedItem = findInTree(props.value, props.items)[0];
+  let content = selectedItem?.display;
+  if (props.renderValue && props.value != null) {
+    content = props.renderValue(content);
+  }
 
   let inputElement = useMemo(
     () => (
       <ContentInput
         disabled={props.disabled}
         className={props.className}
-        content={selectedItem?.title}
+        content={content}
         placeholderClassName={props.placeholderClassName}
-        placeholder={props.placeholderClassName}
+        placeholder={props.placeholder}
+        emptyLocale={props.emptyLocale}
         allowClear={props.allowClear}
         onClear={() => {
           props.onSelect(null);
         }}
       />
     ),
-    [props.disabled, props.value, props.items]
+    [props.disabled, props.value, props.items, content]
   );
 
   if (props.disabled) {
@@ -52,18 +70,18 @@ let DropdownMenu: FC<{
     <DropdownArea
       hideClose={true}
       width={props.menuWidth}
-      cardClassName={styleMenu}
+      cardClassName={cx(styleMenu, props.cardClassName)}
       renderContent={(onClose) => {
         if (props.items.length === 0) {
           return <div className={cx(center, styleEmptyList)}>{props.emptyLocale || "No data"}</div>;
         }
         return (
-          <MenuList
-            value={props.value}
-            items={props.items}
+          <MenuTree
+            selected={props.value as string}
+            data={props.items}
             className={props.menuClassName}
             itemClassName={props.itemClassName}
-            onSelect={(value) => {
+            onChange={(value) => {
               onClose();
               props.onSelect(value);
             }}
@@ -74,9 +92,9 @@ let DropdownMenu: FC<{
       {inputElement}
     </DropdownArea>
   );
-};
+});
 
-export default DropdownMenu;
+export default DropdownTree;
 
 let styleMenu = css`
   min-height: 8px;
