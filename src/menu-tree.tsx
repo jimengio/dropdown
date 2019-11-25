@@ -138,12 +138,14 @@ let stylePrepend = css`
 
 let styleMenuContainer = css`
   transition-duration: 240ms;
-  transition-property: max-height;
+  transition-property: max-height opacity;
   max-height: 1000px;
+  opacity: 1;
 `;
 
 let styleFolded = css`
   max-height: 0px;
+  opacity: 0;
 `;
 
 let stylePlaceholder = css`
