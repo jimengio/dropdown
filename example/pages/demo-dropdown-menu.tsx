@@ -69,6 +69,19 @@ let DemoDropdownMenu: FC<{}> = (props) => {
           placeholderClassName={stylePlaceholder}
         />
       </DocDemo>
+
+      <DocDemo title={"自定义显示内容"} link={link}>
+        <DropdownMenu
+          value={selected}
+          items={items}
+          onSelect={(value) => setSelected(value as string)}
+          className={styleInputArea}
+          allowClear
+          renderValue={(node) => {
+            return `CUSTOM ${selected}`;
+          }}
+        />
+      </DocDemo>
     </div>
   );
 };
@@ -87,4 +100,8 @@ let styleShortInput = css`
 
 let stylePlaceholder = css`
   color: red;
+`;
+
+let styleInputArea = css`
+  width: 240px;
 `;
