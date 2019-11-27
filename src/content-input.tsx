@@ -27,10 +27,14 @@ let ContentInput: FC<{
       {props.allowClear && props.content != null ? (
         <JimoIcon
           name={EJimoIcon.slimCross}
-          className={styleRemoveIcon}
+          className={cx(styleRemoveIcon, "allow-clear")}
           onClick={(event) => {
             event.stopPropagation();
-            props.onClear();
+            if (props.onClear != null) {
+              props.onClear();
+            } else {
+              console.warn("onClear not implemented on ContentInput");
+            }
           }}
         />
       ) : null}
@@ -50,7 +54,11 @@ let styleContainer = css`
   position: relative;
   background-color: white;
 
-  &:hover i.jimo {
+  i.allow-clear.jimo-icon {
+    opacity: 0;
+  }
+
+  &:hover i.allow-clear.jimo-icon {
     opacity: 1;
   }
 `;
@@ -68,17 +76,20 @@ let styleIcon = css`
 `;
 
 let styleRemoveIcon = css`
-  font-size: 16px;
+  font-size: 12px;
   position: absolute;
   right: 9px;
-  background-color: white;
-  color: hsla(0, 0%, 0%, 0.25);
-  opacity: 0;
+  height: 16px;
+  width: 16px;
+  line-height: 15px;
+  text-align: center;
+  background-color: hsla(0, 0%, 80%);
+  border-radius: 8px;
+  color: white;
   cursor: pointer;
 
   &:hover {
-    color: hsla(0, 0%, 0%, 0.5);
-    opacity: 1;
+    background-color: hsla(0, 0%, 75%);
   }
 `;
 
