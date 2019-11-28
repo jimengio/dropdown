@@ -176,19 +176,16 @@ let DropdownArea: FC<IProps> = (props) => {
         <CSSTransition in={visible} unmountOnExit={true} classNames="dropdown" timeout={transitionDuration}>
           <div
             className={cx(column, stylePopPage, "modal-card", props.cardClassName)}
-            style={Object.assign(
-              {},
-              {
-                overflow: "auto",
-                maxHeight: window.innerHeight - 80,
-                width: props.width || inheritedWidth,
-                top: position.top,
-                bottom: position.bottom,
-                left: position.left,
-                right: position.right,
-              },
-              props.cardStyle
-            )}
+            style={{
+              overflow: "auto",
+              maxHeight: window.innerHeight - 80,
+              width: props.width || inheritedWidth,
+              top: position.top,
+              bottom: position.bottom,
+              left: position.left,
+              right: position.right,
+              ...props.cardStyle,
+            }}
             onClick={onContainerClick}
           >
             {props.title ? (
