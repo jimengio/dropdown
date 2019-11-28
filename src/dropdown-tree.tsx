@@ -1,4 +1,4 @@
-import React, { FC, useMemo, ReactNode } from "react";
+import React, { FC, useMemo, ReactNode, CSSProperties } from "react";
 import { css, cx } from "emotion";
 import ContentInput from "./content-input";
 import { flatMap } from "lodash";
@@ -29,6 +29,7 @@ let DropdownTree: FC<{
   emptyLocale?: string;
   placeholderClassName?: string;
   menuWidth?: number;
+  style?: CSSProperties;
   disabled?: boolean;
   allowClear?: boolean;
   renderValue?: (x: any) => ReactNode;
@@ -70,6 +71,7 @@ let DropdownTree: FC<{
     <DropdownArea
       hideClose={true}
       width={props.menuWidth}
+      cardStyle={props.style}
       cardClassName={cx(styleMenu, props.cardClassName)}
       renderContent={(onClose) => {
         if (props.items.length === 0) {
