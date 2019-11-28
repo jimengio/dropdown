@@ -30,6 +30,8 @@ interface IProps {
   guessHeight?: number;
   renderContent: (closeMenu: FuncVoid) => ReactNode;
   hideClose?: boolean;
+  // 设置弹出卡片最大高度
+  cardStyle?: CSSProperties;
 
   /** optional, by default, the area responds to click event,
    * there are cases we want to control how the menu is created
@@ -174,14 +176,19 @@ let DropdownArea: FC<IProps> = (props) => {
         <CSSTransition in={visible} unmountOnExit={true} classNames="dropdown" timeout={transitionDuration}>
           <div
             className={cx(column, stylePopPage, "modal-card", props.cardClassName)}
-            style={{
-              maxHeight: window.innerHeight - 80,
-              width: props.width || inheritedWidth,
-              top: position.top,
-              bottom: position.bottom,
-              left: position.left,
-              right: position.right,
-            }}
+            style={Object.assign(
+              {},
+              {
+                overflow: "auto",
+                maxHeight: window.innerHeight - 80,
+                width: props.width || inheritedWidth,
+                top: position.top,
+                bottom: position.bottom,
+                left: position.left,
+                right: position.right,
+              },
+              props.cardStyle
+            )}
             onClick={onContainerClick}
           >
             {props.title ? (
