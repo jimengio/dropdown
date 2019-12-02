@@ -2,6 +2,44 @@ import React, { FC, useState } from "react";
 import { css, cx } from "emotion";
 import DropdownArea from "../../src/dropdown-area";
 import { expand } from "@jimengio/flex-styles";
+import { DocBlock, DocSnippet } from "@jimengio/doc-frame";
+
+const doc = `
+\`cardStyle\` 卡片样式，可单独使用或者与DropdownTree结合使用可选地继承父组件传入的style属性
+`;
+
+const docCode = `<DropdownArea 
+  className={cx(styleTrigger, styleWider)} 
+  renderContent={(onClose) => "Some content"} 
+  cardStyle={{ maxHeight: 300, width: 300, background: "black" }} 
+/>
+
+/*与DropdownTree结合使用*/
+<DropdownArea
+hideClose={true}
+width={props.menuWidth}
+cardStyle={props.style}
+cardClassName={cx(styleMenu, props.cardClassName)}
+renderContent={(onClose) => {
+  if (props.items.length === 0) {
+    return <div className={cx(center, styleEmptyList)}>{props.emptyLocale || "No data"}</div>;
+  }
+  return (
+    <MenuTree
+      selected={props.value as string}
+      data={props.items}
+      className={props.menuClassName}
+      itemClassName={props.itemClassName}
+      onChange={(value) => {
+        onClose();
+        props.onSelect(value);
+      }}
+    />
+  );
+}}
+>
+{inputElement}
+</DropdownArea>`;
 
 let DemoDropdownArea: FC<{}> = (props) => {
   /** Methods */
@@ -68,6 +106,8 @@ let DemoDropdownArea: FC<{}> = (props) => {
       <DropdownArea guessHeight={80} className={cx(styleTrigger)} width={400} renderContent={(onClose) => "Some content"} hideClose>
         <div>detect edge</div>
       </DropdownArea>
+      <DocBlock content={doc} />
+      <DocSnippet code={docCode} />
     </div>
   );
 };

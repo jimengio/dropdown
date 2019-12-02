@@ -30,7 +30,7 @@ interface IProps {
   guessHeight?: number;
   renderContent: (closeMenu: FuncVoid) => ReactNode;
   hideClose?: boolean;
-  // 设置弹出卡片最大高度
+  // 设置弹出卡片样式
   cardStyle?: CSSProperties;
 
   /** optional, by default, the area responds to click event,
