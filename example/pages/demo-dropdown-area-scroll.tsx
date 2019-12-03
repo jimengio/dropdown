@@ -8,11 +8,13 @@ const doc = `
 \`cardStyle\` 卡片样式，可单独使用或者与DropdownTree结合使用可选地继承父组件传入的style属性
 `;
 
-const docCode = ` <DropdownArea 
-  className={styleTrigger} 
-  renderContent={(onClose) => content} 
-  cardStyle={{ maxHeight: 200, width: 300 }}>
-    <div>Card with scroll</div>
+const docCode = `
+<DropdownArea
+  className={styleTrigger}
+  renderContent={(onClose) => content}
+  cardStyle={{ maxHeight: 200, width: 300 }}
+>
+  <div>Card with scroll</div>
 </DropdownArea>
 `;
 
@@ -41,11 +43,11 @@ let DemoDropdownAreaScroll: FC<{}> = (props) => {
   /** Renderers */
   return (
     <div className={cx(expand, styleContainer)}>
-      <DocBlock content={doc} />
-      <DropdownArea className={styleTrigger} renderContent={(onClose) => content} cardStyle={{ maxHeight: 200, width: 300 }}>
-        <div>Card with scroll</div>
-      </DropdownArea>
       <DocDemo title="Drop down area scroll">
+        <DocBlock content={doc} />
+        <DropdownArea className={styleTrigger} renderContent={(onClose) => content} cardStyle={{ maxHeight: 200, width: 300 }}>
+          <div>Card with scroll</div>
+        </DropdownArea>
         <DocSnippet code={docCode} />
       </DocDemo>
     </div>
