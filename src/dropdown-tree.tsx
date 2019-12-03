@@ -71,6 +71,7 @@ let DropdownTree: FC<{
     <DropdownArea
       hideClose={true}
       width={props.menuWidth}
+      adjustingPosition
       cardStyle={props.style}
       cardClassName={cx(styleMenu, props.cardClassName)}
       renderContent={(onClose) => {
