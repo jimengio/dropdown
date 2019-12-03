@@ -13,6 +13,7 @@ import DemoDropdownMenu from "./demo-dropdown-menu";
 import DemoContentInput from "./demo-content-input";
 import DemoMenuTree from "./demo-menu-tree";
 import DemoDropdownTree from "./demo-dropdown-tree";
+import DemoAjustingPosition from "./demo-ajusting-position";
 
 const renderChildPage = (routerTree: GenRouterTypeMain) => {
   if (routerTree != null) {
@@ -31,6 +32,8 @@ const renderChildPage = (routerTree: GenRouterTypeMain) => {
         return <DemoMenuTree />;
       case "dropdown-tree":
         return <DemoDropdownTree />;
+      case "ajusting-position":
+        return <DemoAjustingPosition />;
       default:
         return (
           <HashRedirect to={genRouter.home.name} delay={2}>
@@ -70,6 +73,10 @@ let items: ISidebarEntry[] = [
   {
     title: "Dropdown tree",
     path: genRouter.dropdownTree.name,
+  },
+  {
+    title: "Adjusting position",
+    path: genRouter.ajustingPosition.name,
   },
 ];
 

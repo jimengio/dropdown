@@ -20,5 +20,8 @@ export const routerRules: IRouteRule[] = [
   {
     path: "dropdown-tree",
   },
+  {
+    path: "ajusting-position",
+  },
   { path: "", name: "home" },
 ];
