@@ -6,6 +6,9 @@ export const routerRules: IRouteRule[] = [
     path: "dropdown-area",
   },
   {
+    path: "dropdown-area-scroll",
+  },
+  {
     path: "dropdown-menu",
   },
   {

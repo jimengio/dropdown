@@ -8,6 +8,7 @@ import { HashRedirect, findRouteTarget } from "@jimengio/ruled-router/lib/dom";
 import { genRouter, GenRouterTypeMain } from "controller/generated-router";
 import { DocSidebar, ISidebarEntry } from "@jimengio/doc-frame";
 import DemoDropdownArea from "./demo-dropdown-area";
+import DemoDropdownAreaScroll from "./demo-dropdown-area-scroll";
 import DemoDropdownMenu from "./demo-dropdown-menu";
 import DemoContentInput from "./demo-content-input";
 import DemoMenuTree from "./demo-menu-tree";
@@ -20,6 +21,8 @@ const renderChildPage = (routerTree: GenRouterTypeMain) => {
         return <Home />;
       case "dropdown-area":
         return <DemoDropdownArea />;
+      case "dropdown-area-scroll":
+        return <DemoDropdownAreaScroll />;
       case "dropdown-menu":
         return <DemoDropdownMenu />;
       case "content-input":
@@ -47,6 +50,10 @@ let items: ISidebarEntry[] = [
   {
     title: "Dropdown area",
     path: genRouter.dropdownArea.name,
+  },
+  {
+    title: "Dropdown area scroll",
+    path: genRouter.dropdownAreaScroll.name,
   },
   {
     title: "Dropdown menu",

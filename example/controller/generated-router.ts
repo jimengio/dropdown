@@ -27,6 +27,12 @@ export let genRouter = {
     path: () => `/dropdown-area`,
     go: () => switchPath(`/dropdown-area`),
   },
+  dropdownAreaScroll: {
+    name: "dropdown-area-scroll",
+    raw: "dropdown-area-scroll",
+    path: () => `/dropdown-area-scroll`,
+    go: () => switchPath(`/dropdown-area-scroll`),
+  },
   dropdownMenu: {
     name: "dropdown-menu",
     raw: "dropdown-menu",
@@ -62,6 +68,7 @@ export let genRouter = {
 export type GenRouterTypeMain =
   | GenRouterTypeTree["home"]
   | GenRouterTypeTree["dropdownArea"]
+  | GenRouterTypeTree["dropdownAreaScroll"]
   | GenRouterTypeTree["dropdownMenu"]
   | GenRouterTypeTree["contentInput"]
   | GenRouterTypeTree["menuTree"]
@@ -77,6 +84,12 @@ export interface GenRouterTypeTree {
   };
   dropdownArea: {
     name: "dropdown-area";
+    params: {};
+    query: {};
+    next: null;
+  };
+  dropdownAreaScroll: {
+    name: "dropdown-area-scroll";
     params: {};
     query: {};
     next: null;
