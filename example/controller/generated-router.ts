@@ -57,6 +57,12 @@ export let genRouter = {
     path: () => `/dropdown-tree`,
     go: () => switchPath(`/dropdown-tree`),
   },
+  ajustingPosition: {
+    name: "ajusting-position",
+    raw: "ajusting-position",
+    path: () => `/ajusting-position`,
+    go: () => switchPath(`/ajusting-position`),
+  },
   $: {
     name: "home",
     raw: "",
@@ -73,6 +79,7 @@ export type GenRouterTypeMain =
   | GenRouterTypeTree["contentInput"]
   | GenRouterTypeTree["menuTree"]
   | GenRouterTypeTree["dropdownTree"]
+  | GenRouterTypeTree["ajustingPosition"]
   | GenRouterTypeTree["$"];
 
 export interface GenRouterTypeTree {
@@ -114,6 +121,12 @@ export interface GenRouterTypeTree {
   };
   dropdownTree: {
     name: "dropdown-tree";
+    params: {};
+    query: {};
+    next: null;
+  };
+  ajustingPosition: {
+    name: "ajusting-position";
     params: {};
     query: {};
     next: null;

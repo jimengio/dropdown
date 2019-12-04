@@ -59,6 +59,7 @@ let DropdownMenu: FC<{
       hideClose={true}
       width={props.menuWidth}
       cardClassName={styleMenu}
+      adjustingPosition
       renderContent={(onClose) => {
         if (props.items.length === 0) {
           return <div className={cx(center, styleEmptyList)}>{props.emptyLocale || "No data"}</div>;

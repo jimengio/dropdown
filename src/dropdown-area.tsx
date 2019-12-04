@@ -37,6 +37,8 @@ interface IProps {
    * there are cases we want to control how the menu is created
    */
   renderTrigger?: (openMenu: FuncVoid, closeMenu: FuncVoid) => ReactNode;
+
+  adjustingPosition?: true;
 }
 
 interface IPosition {
@@ -53,6 +55,7 @@ let DropdownArea: FC<IProps> = (props) => {
 
   let el = useRef<HTMLDivElement>(null);
   let triggerEl = useRef<HTMLDivElement>(null);
+  let cardEl = useRef<HTMLDivElement>(null);
   let sessionToken = useRef<number>(null);
 
   /** Methods */
@@ -158,6 +161,29 @@ let DropdownArea: FC<IProps> = (props) => {
     };
   }, []);
 
+  useEffect(() => {
+    if (props.adjustingPosition && visible) {
+      // 如果计算宽度超出显示区域, 往左弹出
+
+      let almostOut = position.left + cardEl.current.offsetWidth > window.innerWidth;
+      let reachingBottom = position.top + cardEl.current.offsetHeight > window.innerHeight;
+
+      if (almostOut || reachingBottom) {
+        let newPosition: IPosition = { ...position };
+        if (reachingBottom) {
+          newPosition.top = null;
+          newPosition.bottom = 8;
+        }
+        if (almostOut) {
+          newPosition.right = 8;
+          newPosition.left = null;
+        }
+        console.warn("Moving back into screeen:", newPosition, "from", position);
+        setPosition(newPosition);
+      }
+    }
+  });
+
   /** Renderers */
 
   let renderDropdown = () => {
@@ -176,6 +202,7 @@ let DropdownArea: FC<IProps> = (props) => {
         <CSSTransition in={visible} unmountOnExit={true} classNames="dropdown" timeout={transitionDuration}>
           <div
             className={cx(column, stylePopPage, "modal-card", props.cardClassName)}
+            ref={cardEl}
             style={{
               overflow: "auto",
               maxHeight: window.innerHeight - 80,
