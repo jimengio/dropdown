@@ -38,7 +38,7 @@
     "@jimengio/ruled-router": "^0.2.21",
     "@jimengio/safe-property": "^0.0.2",
     "@jimengio/shared-utils": "^0.1.5-a2",
-    "@types/lodash": "^4.14.149",
+    "@types/lodash-es": "^4.17.3",
     "@types/node": "^12.12.12",
     "@types/prettier": "^1.19.0",
     "@types/query-string": "^6.3.0",
@@ -59,7 +59,6 @@
     "html-webpack-tags-plugin": "^2.0.15",
     "http-server": "^0.11.0",
     "immer": "^5.0.0",
-    "lodash": "^4.17.11",
     "prettier": "^1.19.1",
     "query-string": "^6.9.0",
     "react": "^16.12.0",
@@ -77,9 +76,11 @@
     "webpack-bundle-analyzer": "^3.4.1",
     "webpack-cli": "^3.3.7",
     "webpack-dev-server": "^3.8.0",
+    "lodash-es": "^4.17.15",
     "webpack-hud": "^0.1.2"
   },
   "peerDependency": {
+    "lodash-es": "^4.17.15",
     "@jimengio/jimo-icons": "^0.1.19",
     "@jimengio/safe-property": "^0.0.2",
     "@jimengio/fa-icons": "^0.1.11",

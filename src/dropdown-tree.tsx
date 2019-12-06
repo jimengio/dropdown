@@ -1,7 +1,7 @@
 import React, { FC, useMemo, ReactNode, CSSProperties } from "react";
 import { css, cx } from "emotion";
 import ContentInput from "./content-input";
-import { flatMap } from "lodash";
+import { flatMap } from "lodash-es";
 
 import DropdownArea from "./dropdown-area";
 import { rowParted, center, expand } from "@jimengio/flex-styles";
