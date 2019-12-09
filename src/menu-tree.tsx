@@ -18,6 +18,7 @@ export interface IMenuTreeItem {
   key?: string;
   value: string;
   display: ReactNode;
+  disabled?: boolean;
   children?: IMenuTreeItem[];
 }
 
@@ -42,9 +43,19 @@ let MenuTreeItem: FC<{
   return (
     <div>
       <div
-        className={cx(rowMiddle, styleItem, props.selected === props.data.value ? styleSelected : null, props.itemClassName)}
+        className={cx(
+          rowMiddle,
+          styleItem,
+          props.selected === props.data.value ? styleSelected : null,
+          props.data.disabled ? styleDisabled : null,
+          props.itemClassName
+        )}
         style={{ paddingLeft: props.level * 16 + 6 }}
         onClick={() => {
+          if (props.data.disabled) {
+            console.warn("Selecting disabled item", props.data);
+            return;
+          }
           props.onChange(props.data.value);
         }}
       >
@@ -162,4 +173,14 @@ let styleSelected = css`
 
 let styleContainer = css`
   padding: 0 8px;
+`;
+
+let styleDisabled = css`
+  cursor: not-allowed;
+  color: #aaa;
+  font-style: italic;
+
+  :hover {
+    background-color: white;
+  }
 `;

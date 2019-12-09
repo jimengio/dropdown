@@ -20,7 +20,7 @@ let treeData = [
   placeholder={"请选择"}
   cardClassName={styleMenu}
   allowClear
-  style={{ maxHeight: 300, width: 300, background: "black" }} 
+  style={{ maxHeight: 300, width: 300, background: "black" }}
   onSelect={(value) => {
     setSelected(value);
   }}
@@ -43,7 +43,7 @@ let customCode = `
   placeholder={"请选择"}
   cardClassName={styleMenu}
   allowClear
-  style={{ maxHeight: 300, width: 300, background: "black" }} 
+  style={{ maxHeight: 300, width: 300, background: "black" }}
   onSelect={(value) => {
     setSelected(value);
   }}
@@ -57,6 +57,10 @@ let contentCustom = `
 \`renderValue\` 可以用于修改选中项的显示内容。
 \`style\`在外层传入卡片宽度和最大高度，内置滚动条。
 在style中传入的样式可部分覆盖已有弹出卡片样式
+`;
+
+let contentDisabled = `
+\`disabled\` 属性可以设置禁用点击.
 `;
 
 let DemoDropdownTree: FC<{}> = React.memo((props) => {
@@ -82,6 +86,8 @@ let DemoDropdownTree: FC<{}> = React.memo((props) => {
           }}
         />
         <DocSnippet code={code} />
+
+        <DocBlock content={contentDisabled} />
       </DocDemo>
 
       <DocDemo title="Dropdown Tree">
