@@ -7,6 +7,7 @@ export interface IMenuListItem {
   key?: string;
   value: MenuValue;
   title: ReactNode;
+  className?: string;
 }
 
 let MenuList: FC<{
@@ -25,7 +26,7 @@ let MenuList: FC<{
         return (
           <div
             key={item.key || item.value}
-            className={cx(styleItem, item.value === props.value ? styleSelected : null, props.itemClassName)}
+            className={cx(styleItem, item.value === props.value ? styleSelected : null, props.itemClassName, item.className)}
             onClick={() => props.onSelect(item.value, item)}
           >
             {item.title}
