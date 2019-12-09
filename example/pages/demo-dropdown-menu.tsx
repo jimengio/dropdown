@@ -2,9 +2,25 @@ import React, { FC, useState } from "react";
 import { css } from "emotion";
 import MenuList, { IMenuListItem } from "../../src/menu-list";
 import DropdownMenu from "../../src/dropdown-menu";
-import { DocDemo } from "@jimengio/doc-frame";
+import { DocDemo, DocBlock, DocSnippet } from "@jimengio/doc-frame";
 
 let link = "https://github.com/jimengio/dropdown/blob/master/example/pages/demo-dropdown-menu.tsx";
+
+let codeCustom = `
+let itemsWithCustom = [
+  ...items,
+  {
+    value: "2",
+    title: "一些自定义样式",
+    className: styleHasBorder,
+  },
+];
+
+let styleHasBorder = css\`
+  margin-top: 8px;
+  border-top: 1px solid #aaa;
+\`;
+`;
 
 let DemoDropdownMenu: FC<{}> = (props) => {
   let [selected, setSelected] = useState<string>(null);
@@ -32,14 +48,17 @@ let DemoDropdownMenu: FC<{}> = (props) => {
     },
   ];
 
+  let itemsWithCustom = [
+    ...items,
+    {
+      value: "2",
+      title: "一些自定义样式",
+      className: styleHasBorder,
+    },
+  ];
+
   return (
     <div className={styleContainer}>
-      <DocDemo title="Menu example" link={link}>
-        <div className={styleMenuArea}>
-          <MenuList value={selected} items={items} onSelect={(value) => setSelected(value as string)} />
-        </div>
-      </DocDemo>
-
       <DocDemo title="Dropdown menu" link={link}>
         <DropdownMenu
           allowClear
@@ -50,15 +69,12 @@ let DemoDropdownMenu: FC<{}> = (props) => {
           placeholder={"请选择"}
         />
       </DocDemo>
-
       <DocDemo title="Disabled menu" link={link}>
         <DropdownMenu disabled value={selected} items={items} onSelect={(value) => setSelected(value as string)} placeholder={"请选择"} />
       </DocDemo>
-
       <DocDemo title={"Empty locale"} link={link}>
         <DropdownMenu value={selected} items={[]} onSelect={(value) => setSelected(value as string)} placeholder={"请选择"} emptyLocale={"没有数据"} />
       </DocDemo>
-
       <DocDemo title={"自定义 placeholder 样式"} link={link}>
         <DropdownMenu
           value={selected}
@@ -69,7 +85,6 @@ let DemoDropdownMenu: FC<{}> = (props) => {
           placeholderClassName={stylePlaceholder}
         />
       </DocDemo>
-
       <DocDemo title={"自定义显示内容"} link={link}>
         <DropdownMenu
           value={selected}
@@ -81,6 +96,20 @@ let DemoDropdownMenu: FC<{}> = (props) => {
             return `CUSTOM ${selected}`;
           }}
         />
+      </DocDemo>
+
+      <DocDemo title="Menu example" link={link}>
+        <div className={styleMenuArea}>
+          <MenuList value={selected} items={items} onSelect={(value) => setSelected(value as string)} />
+        </div>
+      </DocDemo>
+
+      <DocDemo title="Menu with styles" link={link}>
+        <div className={styleMenuArea}>
+          <MenuList value={selected} items={itemsWithCustom} onSelect={(value) => setSelected(value as string)} />
+
+          <DocSnippet code={codeCustom} />
+        </div>
       </DocDemo>
     </div>
   );
@@ -104,4 +133,9 @@ let stylePlaceholder = css`
 
 let styleInputArea = css`
   width: 240px;
+`;
+
+let styleHasBorder = css`
+  margin-top: 8px;
+  border-top: 1px solid #aaa;
 `;
