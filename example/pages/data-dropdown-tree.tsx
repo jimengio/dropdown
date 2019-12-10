@@ -24,6 +24,7 @@ export let treeData: IMenuTreeItem[] = [
               {
                 value: "08",
                 display: "配色",
+                disabled: true,
               },
             ],
           },
