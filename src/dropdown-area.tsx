@@ -191,10 +191,19 @@ let DropdownArea: FC<IProps> = (props) => {
     }
   });
 
+  // bypass closure issue with a ref
+  let wheelChangeHandler = useRef<FuncVoid>();
+  wheelChangeHandler.current = () => {
+    if (visible) {
+      console.log;
+      handlePopPosition();
+    }
+  };
+
   useEffect(() => {
     if (props.followWheel) {
       let onWindowWheelChange = () => {
-        handlePopPosition();
+        wheelChangeHandler.current();
       };
       window.addEventListener("wheel", onWindowWheelChange);
       return () => {
