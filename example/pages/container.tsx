@@ -14,6 +14,7 @@ import DemoContentInput from "./demo-content-input";
 import DemoMenuTree from "./demo-menu-tree";
 import DemoDropdownTree from "./demo-dropdown-tree";
 import DemoAjustingPosition from "./demo-ajusting-position";
+import DemoFollowWheel from "./demo-follow-wheel";
 
 const renderChildPage = (routerTree: GenRouterTypeMain) => {
   if (routerTree != null) {
@@ -34,6 +35,8 @@ const renderChildPage = (routerTree: GenRouterTypeMain) => {
         return <DemoDropdownTree />;
       case "ajusting-position":
         return <DemoAjustingPosition />;
+      case "follow-wheel":
+        return <DemoFollowWheel />;
       default:
         return (
           <HashRedirect to={genRouter.home.name} delay={2}>
@@ -77,6 +80,10 @@ let items: ISidebarEntry[] = [
   {
     title: "Adjusting position",
     path: genRouter.ajustingPosition.name,
+  },
+  {
+    title: "Follow Wheel",
+    path: genRouter.followWheel.name,
   },
 ];
 

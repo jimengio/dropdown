@@ -63,6 +63,12 @@ export let genRouter = {
     path: () => `/ajusting-position`,
     go: () => switchPath(`/ajusting-position`),
   },
+  followWheel: {
+    name: "follow-wheel",
+    raw: "follow-wheel",
+    path: () => `/follow-wheel`,
+    go: () => switchPath(`/follow-wheel`),
+  },
   $: {
     name: "home",
     raw: "",
@@ -80,6 +86,7 @@ export type GenRouterTypeMain =
   | GenRouterTypeTree["menuTree"]
   | GenRouterTypeTree["dropdownTree"]
   | GenRouterTypeTree["ajustingPosition"]
+  | GenRouterTypeTree["followWheel"]
   | GenRouterTypeTree["$"];
 
 export interface GenRouterTypeTree {
@@ -127,6 +134,12 @@ export interface GenRouterTypeTree {
   };
   ajustingPosition: {
     name: "ajusting-position";
+    params: {};
+    query: {};
+    next: null;
+  };
+  followWheel: {
+    name: "follow-wheel";
     params: {};
     query: {};
     next: null;

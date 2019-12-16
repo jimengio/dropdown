@@ -23,5 +23,8 @@ export const routerRules: IRouteRule[] = [
   {
     path: "ajusting-position",
   },
+  {
+    path: "follow-wheel",
+  },
   { path: "", name: "home" },
 ];

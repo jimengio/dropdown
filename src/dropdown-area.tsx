@@ -39,6 +39,9 @@ interface IProps {
   renderTrigger?: (openMenu: FuncVoid, closeMenu: FuncVoid) => ReactNode;
 
   adjustingPosition?: true;
+
+  /** 强行监听 wheel 事件, 重新设置弹出菜单的位置 */
+  followWheel?: boolean;
 }
 
 interface IPosition {
@@ -71,11 +74,7 @@ let DropdownArea: FC<IProps> = (props) => {
     openMenu();
   };
 
-  let openMenu = () => {
-    if (visible) {
-      return;
-    }
-
+  let handlePopPosition = () => {
     let rect = triggerEl.current.getBoundingClientRect();
 
     // 如果计算宽度超出显示区域, 往左弹出
@@ -105,6 +104,14 @@ let DropdownArea: FC<IProps> = (props) => {
         bottom: reachingBottom ? 8 : null,
       });
     }
+  };
+
+  let openMenu = () => {
+    if (visible) {
+      return;
+    }
+
+    handlePopPosition();
 
     // 广播机制, 通知其他的菜单在接受到消息的时候关闭
     let newToken = Math.random();
@@ -183,6 +190,18 @@ let DropdownArea: FC<IProps> = (props) => {
       }
     }
   });
+
+  useEffect(() => {
+    if (props.followWheel) {
+      let onWindowWheelChange = () => {
+        handlePopPosition();
+      };
+      window.addEventListener("wheel", onWindowWheelChange);
+      return () => {
+        window.removeEventListener("wheel", onWindowWheelChange);
+      };
+    }
+  }, []);
 
   /** Renderers */
 
