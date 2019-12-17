@@ -33,6 +33,7 @@ let DropdownTree: FC<{
   disabled?: boolean;
   allowClear?: boolean;
   renderValue?: (x: any) => ReactNode;
+  followWheel?: boolean;
 }> = React.memo((props) => {
   /** Plugins */
   /** Methods */
@@ -74,6 +75,7 @@ let DropdownTree: FC<{
       adjustingPosition
       cardStyle={props.style}
       cardClassName={cx(styleMenu, props.cardClassName)}
+      followWheel={props.followWheel}
       renderContent={(onClose) => {
         if (props.items.length === 0) {
           return <div className={cx(center, styleEmptyList)}>{props.emptyLocale || "No data"}</div>;

@@ -21,6 +21,7 @@ let DropdownMenu: FC<{
   disabled?: boolean;
   allowClear?: boolean;
   renderValue?: (x: any) => ReactNode;
+  followWheel?: boolean;
 }> = (props) => {
   /** Methods */
   /** Effects */
@@ -60,6 +61,7 @@ let DropdownMenu: FC<{
       width={props.menuWidth}
       cardClassName={styleMenu}
       adjustingPosition
+      followWheel={props.followWheel}
       renderContent={(onClose) => {
         if (props.items.length === 0) {
           return <div className={cx(center, styleEmptyList)}>{props.emptyLocale || "No data"}</div>;
