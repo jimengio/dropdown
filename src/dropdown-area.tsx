@@ -255,7 +255,11 @@ export let useDropdownArea = (props: IUseDropdownAreaProps) => {
 
   let ui = renderDropdown();
 
-  return [ui, triggerEl, openMenu, onClose] as [ReactNode, Ref<HTMLDivElement>, typeof openMenu, typeof onClose];
+  let internalState = {
+    visible,
+  };
+
+  return [ui, triggerEl, openMenu, onClose, internalState] as [ReactNode, Ref<HTMLDivElement>, typeof openMenu, typeof onClose, typeof internalState];
 };
 
 let DropdownArea: FC<IProps> = React.memo((props) => {
