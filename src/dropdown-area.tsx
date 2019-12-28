@@ -7,7 +7,7 @@ let relativeOffset = 4; /** 菜单相对弹出位置有一个上下偏差, 以�
 let containOffset = 2; /** 菜单相对弹出位置有一个左右偏差, 以便看起来不要过于死板 */
 let containerName = "meson-dropdown-container";
 
-import React, { FC, useEffect, useState, ReactNode, CSSProperties, useRef } from "react";
+import React, { FC, useEffect, useState, ReactNode, CSSProperties, useRef, Ref } from "react";
 import ReactDOM from "react-dom";
 import { rowParted, column } from "@jimengio/flex-styles";
 
@@ -16,11 +16,8 @@ type FuncVoid = () => void;
 let bus = new EventEmitter();
 let menuEvent = "menu-event";
 
-interface IProps {
+interface IUseDropdownAreaProps {
   title?: string;
-  /** trigger 区域的样式 */
-  className?: string;
-  style?: CSSProperties;
   /** 弹出的卡片的样式 */
   cardClassName?: string;
   /** 菜单对准右侧, 从右往左弹出 */
@@ -33,15 +30,21 @@ interface IProps {
   // 设置弹出卡片样式
   cardStyle?: CSSProperties;
 
-  /** optional, by default, the area responds to click event,
-   * there are cases we want to control how the menu is created
-   */
-  renderTrigger?: (openMenu: FuncVoid, closeMenu: FuncVoid) => ReactNode;
-
   adjustingPosition?: true;
 
   /** 强行监听 wheel 事件, 重新设置弹出菜单的位置 */
   followWheel?: boolean;
+}
+
+interface IProps extends IUseDropdownAreaProps {
+  /** trigger 区域的样式 */
+  className?: string;
+  style?: CSSProperties;
+
+  /** optional, by default, the area responds to click event,
+   * there are cases we want to control how the menu is created
+   */
+  renderTrigger?: (openMenu: FuncVoid, closeMenu: FuncVoid) => ReactNode;
 }
 
 interface IPosition {
@@ -51,7 +54,7 @@ interface IPosition {
   right?: number;
 }
 
-let DropdownArea: FC<IProps> = (props) => {
+export let useDropdownArea = (props: IUseDropdownAreaProps) => {
   let [visible, setVisible] = useState(false);
   let [position, setPosition] = useState({} as IPosition);
   let [inheritedWidth, setInheritedWidth] = useState(null as number);
@@ -62,17 +65,6 @@ let DropdownArea: FC<IProps> = (props) => {
   let sessionToken = useRef<number>(null);
 
   /** Methods */
-
-  let onTriggerClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    if (visible) {
-      setVisible(false);
-      return;
-    }
-
-    event.stopPropagation();
-
-    openMenu();
-  };
 
   let handlePopPosition = () => {
     let rect = triggerEl.current.getBoundingClientRect();
@@ -261,13 +253,37 @@ let DropdownArea: FC<IProps> = (props) => {
     );
   };
 
+  let ui = renderDropdown();
+
+  let internalState = {
+    visible,
+  };
+
+  return [ui, triggerEl, openMenu, onClose, internalState] as [ReactNode, Ref<HTMLDivElement>, typeof openMenu, typeof onClose, typeof internalState];
+};
+
+let DropdownArea: FC<IProps> = React.memo((props) => {
+  let [ui, triggerEl, openMenu, onClose] = useDropdownArea(props);
+
+  /** Plugins */
+  /** Methods */
+
+  let onTriggerClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    event.stopPropagation();
+
+    openMenu();
+  };
+
+  /** Effects */
+  /** Renderers */
+
   if (props.renderTrigger != null) {
     return (
       <>
         <div className={cx(styleTrigger, props.className)} style={props.style} ref={triggerEl}>
           {props.renderTrigger(openMenu, onClose)}
         </div>
-        {renderDropdown()}
+        {ui}
       </>
     );
   }
@@ -277,10 +293,10 @@ let DropdownArea: FC<IProps> = (props) => {
       <div className={cx(styleTrigger, props.className)} style={props.style} onClick={onTriggerClick} ref={triggerEl}>
         {props.children}
       </div>
-      {renderDropdown()}
+      {ui}
     </>
   );
-};
+});
 
 export default DropdownArea;
 
