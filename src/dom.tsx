@@ -1,4 +1,4 @@
-let checkIfDomTreeContains = (a: HTMLElement, b: HTMLElement): boolean => {
+export let checkIfDomTreeContains = (a: HTMLElement, b: HTMLElement): boolean => {
   if (a === b) {
     return true;
   }
