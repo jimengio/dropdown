@@ -12,7 +12,7 @@ function qsStringify(queries: { [k: string]: string }) {
 
 // generated
 
-// Generated with router-code-generator@0.2.5
+// Generated with router-code-generator@0.2.6-a1
 
 export let genRouter = {
   home: {
@@ -38,6 +38,12 @@ export let genRouter = {
     raw: "dropdown-area-scroll",
     path: () => `/dropdown-area-scroll`,
     go: () => switchPath(`/dropdown-area-scroll`),
+  },
+  customTrigger: {
+    name: "custom-trigger",
+    raw: "custom-trigger",
+    path: () => `/custom-trigger`,
+    go: () => switchPath(`/custom-trigger`),
   },
   dropdownMenu: {
     name: "dropdown-menu",
@@ -88,6 +94,7 @@ export type GenRouterTypeMain =
   | GenRouterTypeTree["dropdownArea"]
   | GenRouterTypeTree["hooksArea"]
   | GenRouterTypeTree["dropdownAreaScroll"]
+  | GenRouterTypeTree["customTrigger"]
   | GenRouterTypeTree["dropdownMenu"]
   | GenRouterTypeTree["contentInput"]
   | GenRouterTypeTree["menuTree"]
@@ -117,6 +124,12 @@ export interface GenRouterTypeTree {
   };
   dropdownAreaScroll: {
     name: "dropdown-area-scroll";
+    params: {};
+    query: {};
+    next: null;
+  };
+  customTrigger: {
+    name: "custom-trigger";
     params: {};
     query: {};
     next: null;

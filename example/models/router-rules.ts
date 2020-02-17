@@ -12,6 +12,9 @@ export const routerRules: IRouteRule[] = [
     path: "dropdown-area-scroll",
   },
   {
+    path: "custom-trigger",
+  },
+  {
     path: "dropdown-menu",
   },
   {
