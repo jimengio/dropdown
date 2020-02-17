@@ -3,7 +3,6 @@ import { parseRoutePath, IRouteParseResult } from "@jimengio/ruled-router";
 import { css, cx } from "emotion";
 import { row, fullHeight, fullscreen, expand } from "@jimengio/flex-styles";
 
-import Home from "./home";
 import { HashRedirect, findRouteTarget } from "@jimengio/ruled-router/lib/dom";
 import { genRouter, GenRouterTypeMain } from "controller/generated-router";
 import { DocSidebar, ISidebarEntry } from "@jimengio/doc-frame";
@@ -16,12 +15,11 @@ import DemoDropdownTree from "./demo-dropdown-tree";
 import DemoAjustingPosition from "./demo-ajusting-position";
 import DemoFollowWheel from "./demo-follow-wheel";
 import DemoHooksArea from "./demo-hooks-area";
+import DemoCustomTrigger from "./demo-custom-trigger";
 
 const renderChildPage = (routerTree: GenRouterTypeMain) => {
   if (routerTree != null) {
     switch (routerTree.name) {
-      case "home":
-        return <Home />;
       case "dropdown-area":
         return <DemoDropdownArea />;
       case "dropdown-area-scroll":
@@ -40,22 +38,16 @@ const renderChildPage = (routerTree: GenRouterTypeMain) => {
         return <DemoFollowWheel />;
       case "hooks-area":
         return <DemoHooksArea />;
+      case "custom-trigger":
+        return <DemoCustomTrigger />;
       default:
-        return (
-          <HashRedirect to={genRouter.home.name} delay={2}>
-            2s to redirect
-          </HashRedirect>
-        );
+        return <HashRedirect to={genRouter.dropdownArea.path()} noDelay />;
     }
   }
   return <div>NOTHING</div>;
 };
 
 let items: ISidebarEntry[] = [
-  {
-    title: "Home",
-    path: genRouter.home.name,
-  },
   {
     title: "Dropdown area",
     path: genRouter.dropdownArea.name,
@@ -67,6 +59,10 @@ let items: ISidebarEntry[] = [
   {
     title: "Dropdown area scroll",
     path: genRouter.dropdownAreaScroll.name,
+  },
+  {
+    title: "Custom trigger",
+    path: genRouter.customTrigger.name,
   },
   {
     title: "Dropdown menu",

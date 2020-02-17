@@ -2,6 +2,7 @@ import React, { FC, useState } from "react";
 import { css, cx } from "emotion";
 import DropdownArea from "../../src/dropdown-area";
 import { expand } from "@jimengio/flex-styles";
+import { DocDemo, DocSnippet, DocBlock } from "@jimengio/doc-frame";
 
 let DemoDropdownArea: FC<{}> = (props) => {
   /** Methods */
@@ -9,65 +10,64 @@ let DemoDropdownArea: FC<{}> = (props) => {
   /** Renderers */
   return (
     <div className={cx(expand, styleContainer)}>
-      <DropdownArea className={styleTrigger} title="A title" renderContent={(onClose) => "Some content"}>
-        <div>Content with title</div>
-      </DropdownArea>
+      <DocDemo title="Default">
+        <DocBlock content={contentDefault} />
+        <DocSnippet code={codeHideTitle} />
+        <DropdownArea className={styleTrigger} renderContent={(onClose) => "Some content"}>
+          <div>No title</div>
+        </DropdownArea>
+      </DocDemo>
 
-      <DropdownArea className={styleTrigger} renderContent={(onClose) => "Some content"}>
-        <div>No title</div>
-      </DropdownArea>
+      <DocDemo title="With a title">
+        <DocSnippet code={codeDropdownArea} />
+        <DropdownArea className={styleTrigger} title="A title" renderContent={(onClose) => "Some content"}>
+          <div>Content with title</div>
+        </DropdownArea>
+      </DocDemo>
 
-      <DropdownArea className={styleTrigger} renderContent={(onClose) => "Some content"} hideClose>
-        <div>No close button</div>
-      </DropdownArea>
+      <DocDemo title="Hide close">
+        <DocSnippet code={codeHideClose} />
+        <DropdownArea className={styleTrigger} renderContent={(onClose) => "Some content"} hideClose>
+          <div>No close button</div>
+        </DropdownArea>
+      </DocDemo>
 
-      <DropdownArea className={styleTrigger} renderContent={(onClose) => "Some content"} hideClose alignToRight>
-        <div>Align to right</div>
-      </DropdownArea>
+      <DocDemo title="Align to right">
+        <DocSnippet code={codeAlignRight} />
+        <DropdownArea className={styleTrigger} renderContent={(onClose) => "Some content"} hideClose alignToRight>
+          <div>Align to right</div>
+        </DropdownArea>
+      </DocDemo>
 
-      <DropdownArea className={cx(styleTrigger, styleWider)} renderContent={(onClose) => "Some content"} hideClose>
-        <div>Width inherited</div>
-      </DropdownArea>
+      <DocDemo title="Control width">
+        <DocSnippet code={codeWidth} />
+        <DropdownArea width={400} className={styleTrigger} renderContent={(onClose) => "Some content"}>
+          <div>Content</div>
+        </DropdownArea>
+      </DocDemo>
 
-      <DropdownArea
-        className={styleTrigger}
-        title="A title"
-        renderContent={(onClose) => "Some content"}
-        renderTrigger={(openMenu, closeMenu) => {
-          return (
-            <input
-              className={styleInput}
-              placeholder={"Custom trigger"}
-              onChange={(event) => {
-                if (event.target.value === "") {
-                  closeMenu();
-                } else {
-                  openMenu();
-                }
-              }}
-            />
-          );
-        }}
-      ></DropdownArea>
+      <DocDemo title="Width as trigger area">
+        <DocSnippet code={codeWidthInherited} />
+        <DropdownArea className={cx(styleTrigger, styleWider)} renderContent={(onClose) => "Some content"} hideClose>
+          <div>Width inherited</div>
+        </DropdownArea>
+      </DocDemo>
 
-      <DropdownArea
-        className={cx(styleTrigger)}
-        renderContent={(onClose) => (
-          <div>
-            Some content
-            <button onClick={onClose}>Close</button>
-          </div>
-        )}
-        hideClose
-      >
-        <div>A close button</div>
-      </DropdownArea>
-
-      <div style={{ height: 400 }}></div>
-
-      <DropdownArea guessHeight={80} className={cx(styleTrigger)} width={400} renderContent={(onClose) => "Some content"} hideClose>
-        <div>detect edge</div>
-      </DropdownArea>
+      <DocDemo title="Close from inside menu">
+        <DocSnippet code={codeCloseInside} />
+        <DropdownArea
+          className={cx(styleTrigger)}
+          renderContent={(onClose) => (
+            <div>
+              Some content
+              <button onClick={onClose}>Close</button>
+            </div>
+          )}
+          hideClose
+        >
+          <div>A close button</div>
+        </DropdownArea>
+      </DocDemo>
     </div>
   );
 };
@@ -88,9 +88,83 @@ let styleWider = css`
   width: 300px;
 `;
 
-let styleInput = css`
-  line-height: 24px;
-  font-size: 14px;
-  padding: 0 8px;
-  outline: none;
+let codeDropdownArea = `
+<DropdownArea
+  className={styleTrigger}
+  title="A title"
+  renderContent={(onClose) => "Some content"}
+  >
+  <div>Content with title</div>
+</DropdownArea>
+`;
+
+let codeHideTitle = `
+<DropdownArea
+  className={styleTrigger}
+  renderContent={(onClose) => "Some content"}
+  >
+  <div>No title</div>
+</DropdownArea>
+`;
+
+let codeHideClose = `
+<DropdownArea
+  className={styleTrigger}
+  hideClose
+  renderContent={(onClose) => "Some content"}
+  >
+  <div>No close button</div>
+</DropdownArea>
+`;
+
+let codeAlignRight = `
+<DropdownArea
+  className={styleTrigger}
+  hideClose
+  alignToRight
+  renderContent={(onClose) => "Some content"}
+  >
+  <div>Align to right</div>
+</DropdownArea>
+`;
+
+let codeWidthInherited = `
+<DropdownArea
+  className={cx(styleTrigger, styleWider)}
+  hideClose
+  renderContent={(onClose) => "Some content"}
+  >
+  <div>Width inherited</div>
+</DropdownArea>
+`;
+
+let codeCloseInside = `
+<DropdownArea
+  className={cx(styleTrigger)}
+  renderContent={(onClose) => (
+    <div>
+      Some content
+      <button onClick={onClose}>Close</button>
+    </div>
+  )}
+  hideClose
+  >
+  <div>A close button</div>
+</DropdownArea>
+`;
+
+let codeWidth = `
+<DropdownArea
+  width={400}
+  className={styleTrigger}
+  renderContent={(onClose) => "Some content"}
+  >
+  <div>Content</div>
+</DropdownArea>
+`;
+
+let contentDefault = `
+DropdownArea 默认弹出无内容的一个弹层, 方便根据业务定制.
+需要下拉菜单样式请使用 DropdownMenu 组件.
+目前当前组件对弹层超出屏幕边缘的情况只是做了基本的处理, 参考后方章节.
 `;
