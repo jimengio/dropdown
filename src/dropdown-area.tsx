@@ -14,9 +14,6 @@ import { checkIfDomTreeContains } from "./dom";
 
 type FuncVoid = () => void;
 
-let bus = new EventEmitter();
-let menuEvent = "menu-event";
-
 interface IUseDropdownAreaProps {
   title?: string;
   /** 弹出的卡片的样式 */
@@ -108,11 +105,7 @@ export let useDropdownArea = (props: IUseDropdownAreaProps) => {
 
     handlePopPosition();
 
-    // 广播机制, 通知其他的菜单在接受到消息的时候关闭
-    let newToken = Math.random();
-    sessionToken.current = newToken;
-    bus.emit(menuEvent, newToken);
-
+    // 记录打开时间, 打开过程关闭点击响应
     openTimeRef.current = Date.now();
   };
 
@@ -133,13 +126,6 @@ export let useDropdownArea = (props: IUseDropdownAreaProps) => {
     setVisible(false);
   };
 
-  /** 判断是否是自身发起的广播, 如果是自己的, 不需要关闭 */
-  let detectOnClose = (token: any) => {
-    if (token !== sessionToken.current) {
-      onUserClose();
-    }
-  };
-
   /** Effects */
 
   if (el.current == null) {
@@ -156,7 +142,6 @@ export let useDropdownArea = (props: IUseDropdownAreaProps) => {
 
     root.appendChild(el.current);
 
-    bus.on(menuEvent, detectOnClose);
     window.addEventListener("click", onClickClose);
 
     return () => {
@@ -169,7 +154,6 @@ export let useDropdownArea = (props: IUseDropdownAreaProps) => {
 
       root.removeChild(el.current);
 
-      bus.removeListener(menuEvent, detectOnClose);
       window.removeEventListener("click", onClickClose);
     };
   }, []);
