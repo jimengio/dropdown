@@ -10,11 +10,9 @@ let containerName = "meson-dropdown-container";
 import React, { FC, useEffect, useState, ReactNode, CSSProperties, useRef, Ref } from "react";
 import ReactDOM from "react-dom";
 import { rowParted, column } from "@jimengio/flex-styles";
+import { checkIfDomTreeContains } from "./dom";
 
 type FuncVoid = () => void;
-
-let bus = new EventEmitter();
-let menuEvent = "menu-event";
 
 interface IUseDropdownAreaProps {
   title?: string;
@@ -63,6 +61,8 @@ export let useDropdownArea = (props: IUseDropdownAreaProps) => {
   let triggerEl = useRef<HTMLDivElement>(null);
   let cardEl = useRef<HTMLDivElement>(null);
   let sessionToken = useRef<number>(null);
+  let openTimeRef = useRef(0);
+  let containerElRef = useRef<HTMLDivElement>();
 
   /** Methods */
 
@@ -105,25 +105,25 @@ export let useDropdownArea = (props: IUseDropdownAreaProps) => {
 
     handlePopPosition();
 
-    // 广播机制, 通知其他的菜单在接受到消息的时候关闭
-    let newToken = Math.random();
-    sessionToken.current = newToken;
-    bus.emit(menuEvent, newToken);
+    // 记录打开时间, 打开过程关闭点击响应
+    openTimeRef.current = Date.now();
   };
 
-  let onClose = () => {
-    setVisible(false);
-  };
+  let onClickClose = (event) => {
+    // 点击在卡片内, 不要关闭菜单
+    let insidePopCard = checkIfDomTreeContains(containerElRef.current, event.target);
+    if (insidePopCard) {
+      return;
+    }
 
-  /** 判断是否是自身发起的广播, 如果是自己的, 不需要关闭 */
-  let detectOnClose = (token: any) => {
-    if (token !== sessionToken.current) {
-      onClose();
+    // 打开过程当中不响应点击事件
+    if (Date.now() - openTimeRef.current > transitionDuration) {
+      setVisible(false);
     }
   };
 
-  let onContainerClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    event.stopPropagation();
+  let onUserClose = () => {
+    setVisible(false);
   };
 
   /** Effects */
@@ -142,8 +142,7 @@ export let useDropdownArea = (props: IUseDropdownAreaProps) => {
 
     root.appendChild(el.current);
 
-    bus.on(menuEvent, detectOnClose);
-    window.addEventListener("click", onClose);
+    window.addEventListener("click", onClickClose);
 
     return () => {
       let root = document.querySelector(`.${containerName}`);
@@ -155,8 +154,7 @@ export let useDropdownArea = (props: IUseDropdownAreaProps) => {
 
       root.removeChild(el.current);
 
-      bus.removeListener(menuEvent, detectOnClose);
-      window.removeEventListener("click", onClose);
+      window.removeEventListener("click", onClickClose);
     };
   }, []);
 
@@ -218,10 +216,10 @@ export let useDropdownArea = (props: IUseDropdownAreaProps) => {
     );
 
     return ReactDOM.createPortal(
-      <div onClick={onContainerClick} className={styleAnimations}>
+      <div className={styleAnimations} ref={containerElRef}>
         <CSSTransition in={visible} unmountOnExit={true} classNames="dropdown" timeout={transitionDuration}>
           <div
-            className={cx(column, stylePopPage, "modal-card", props.cardClassName)}
+            className={cx(column, stylePopPage, "popup-card", props.cardClassName)}
             ref={cardEl}
             style={{
               overflow: "auto",
@@ -233,7 +231,6 @@ export let useDropdownArea = (props: IUseDropdownAreaProps) => {
               right: position.right,
               ...props.cardStyle,
             }}
-            onClick={onContainerClick}
           >
             {props.title ? (
               <div className={cx(rowParted, styleHeader)}>
@@ -241,11 +238,11 @@ export let useDropdownArea = (props: IUseDropdownAreaProps) => {
               </div>
             ) : null}
             {props.hideClose ? null : (
-              <span className={styleCloseIcon} onClick={onClose}>
+              <span className={styleCloseIcon} onClick={onUserClose}>
                 {getSvg("#aaa", 14, 14)}
               </span>
             )}
-            {props.renderContent(onClose)}
+            {props.renderContent(onUserClose)}
           </div>
         </CSSTransition>
       </div>,
@@ -259,7 +256,7 @@ export let useDropdownArea = (props: IUseDropdownAreaProps) => {
     visible,
   };
 
-  return [ui, triggerEl, openMenu, onClose, internalState] as [ReactNode, Ref<HTMLDivElement>, typeof openMenu, typeof onClose, typeof internalState];
+  return [ui, triggerEl, openMenu, onUserClose, internalState] as [ReactNode, Ref<HTMLDivElement>, typeof openMenu, typeof onUserClose, typeof internalState];
 };
 
 let DropdownArea: FC<IProps> = React.memo((props) => {
@@ -269,8 +266,6 @@ let DropdownArea: FC<IProps> = React.memo((props) => {
   /** Methods */
 
   let onTriggerClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    event.stopPropagation();
-
     openMenu();
   };
 
@@ -304,14 +299,14 @@ let styleAnimations = css`
   .dropdown-enter {
     opacity: 0;
 
-    &.modal-card {
+    &.popup-card {
       transform: translate(0, -12px) scale(0.9);
     }
   }
   .dropdown-enter.dropdown-enter-active {
     opacity: 1;
     transition-duration: ${transitionDuration}ms;
-    &.modal-card {
+    &.popup-card {
       transform: translate(0px, 0px);
       transition-duration: ${transitionDuration}ms;
     }
@@ -319,7 +314,7 @@ let styleAnimations = css`
   .dropdown-exit {
     opacity: 1;
 
-    &.modal-card {
+    &.popup-card {
       transform: translate(0px, 0px);
     }
   }
@@ -327,7 +322,7 @@ let styleAnimations = css`
     opacity: 0;
     transition-duration: ${transitionDuration}ms;
 
-    &.modal-card {
+    &.popup-card {
       transform: translate(0px, -12px) scale(0.9);
       transition: ${transitionDuration}ms;
     }
