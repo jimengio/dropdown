@@ -156,6 +156,7 @@ let styleMenuContainer = css`
 
 let styleFolded = css`
   max-height: 0px;
+  overflow: hidden;
   opacity: 0;
 `;
 
