@@ -1,4 +1,4 @@
-import React, { FC, useMemo, ReactNode } from "react";
+import React, { FC, useMemo, ReactNode, useState } from "react";
 import { css, cx } from "emotion";
 import DropdownArea from "./dropdown-area";
 import MenuList, { MenuValue, IMenuListItem } from "./menu-list";
@@ -34,12 +34,15 @@ let DropdownMenu: FC<{
     content = props.renderValue(content);
   }
 
+  let [active, setActive] = useState<boolean>(false);
+
   let inputElement = useMemo(
     () => (
       <ContentInput
         disabled={props.disabled}
         className={props.className}
         content={content}
+        isActive={active}
         placeholderClassName={props.placeholderClassName}
         placeholder={props.placeholder}
         allowClear={props.allowClear}
@@ -48,7 +51,7 @@ let DropdownMenu: FC<{
         }}
       />
     ),
-    [props.disabled, props.value, props.items]
+    [props.disabled, props.value, props.items, active]
   );
 
   if (props.disabled) {
@@ -62,6 +65,9 @@ let DropdownMenu: FC<{
       cardClassName={styleMenu}
       adjustingPosition
       followWheel={props.followWheel}
+      onExpand={(expand: boolean) => {
+        setActive(expand);
+      }}
       renderContent={(onClose) => {
         if (props.items.length === 0) {
           return <div className={cx(center, styleEmptyList)}>{props.emptyLocale || "No data"}</div>;
