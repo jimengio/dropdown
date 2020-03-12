@@ -123,4 +123,5 @@ let styleValue = css`
   font-size: 14px;
   line-height: 34px;
   height: 32px;
+  color: #323232;
 `;
