@@ -130,9 +130,10 @@ let styleItem = css`
   line-height: 36px;
   border-bottom: 1px solid hsla(0, 0%, 91%, 1);
   cursor: pointer;
+  color: #323232;
 
   :hover {
-    background-color: hsla(221, 100%, 61%, 0.1);
+    background: rgba(242, 245, 251, 1);
   }
 `;
 
@@ -165,10 +166,10 @@ let stylePlaceholder = css`
 `;
 
 let styleSelected = css`
-  background-color: hsla(221, 100%, 61%, 0.2);
+  background: rgba(242, 245, 251, 1);
 
   :hover {
-    background-color: hsla(221, 100%, 61%, 0.2);
+    background: rgba(242, 245, 251, 1);
   }
 `;
 

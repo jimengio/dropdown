@@ -16,6 +16,7 @@ import DemoAjustingPosition from "./demo-ajusting-position";
 import DemoFollowWheel from "./demo-follow-wheel";
 import DemoHooksArea from "./demo-hooks-area";
 import DemoCustomTrigger from "./demo-custom-trigger";
+import DemoDropdownSelect from "./demo-dropdown-select";
 
 const renderChildPage = (routerTree: GenRouterTypeMain) => {
   if (routerTree != null) {
@@ -40,6 +41,8 @@ const renderChildPage = (routerTree: GenRouterTypeMain) => {
         return <DemoHooksArea />;
       case "custom-trigger":
         return <DemoCustomTrigger />;
+      case "dropdown-select":
+        return <DemoDropdownSelect />;
       default:
         return <HashRedirect to={genRouter.dropdownArea.path()} noDelay />;
     }
@@ -87,6 +90,10 @@ let items: ISidebarEntry[] = [
   {
     title: "Follow Wheel",
     path: genRouter.followWheel.name,
+  },
+  {
+    title: "Dropdown select",
+    path: genRouter.dropdownSelect.name,
   },
 ];
 

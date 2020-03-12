@@ -1,48 +1,36 @@
-import React, { FC, useMemo, ReactNode, CSSProperties, useState } from "react";
+import React, { FC, useMemo, ReactNode, useState } from "react";
 import { css, cx } from "emotion";
-import ContentInput from "./content-input";
-import { flatMap } from "lodash-es";
-
 import DropdownArea from "./dropdown-area";
+import MenuList, { MenuValue, IMenuListItem } from "./menu-list";
+import FaIcon, { EFaIcon } from "@jimengio/fa-icons";
 import { rowParted, center, expand } from "@jimengio/flex-styles";
-import MenuTree, { IMenuTreeItem } from "./menu-tree";
+import JimoIcon, { EJimoIcon } from "@jimengio/jimo-icons";
+import ContentInput from "./content-input";
 
-let findInTree = (value: string, items: IMenuTreeItem[]): IMenuTreeItem[] => {
-  return flatMap(items, (item) => {
-    if (item.value === value) {
-      return [item];
-    } else {
-      return findInTree(value, item.children);
-    }
-  });
-};
-
-let DropdownTree: FC<{
-  value: string;
-  items: IMenuTreeItem[];
-  onSelect: (value: string) => void;
+let DropdownSelect: FC<{
+  value: MenuValue;
+  items: IMenuListItem[];
+  onSelect: (value: MenuValue) => void;
   className?: string;
   menuClassName?: string;
-  cardClassName?: string;
   itemClassName?: string;
   placeholder?: string;
   emptyLocale?: string;
   placeholderClassName?: string;
   menuWidth?: number;
-  style?: CSSProperties;
   disabled?: boolean;
   allowClear?: boolean;
   renderValue?: (x: any) => ReactNode;
   followWheel?: boolean;
-}> = React.memo((props) => {
-  /** Plugins */
+}> = (props) => {
   /** Methods */
   /** Effects */
   /** Renderers */
 
-  let selectedItem = findInTree(props.value, props.items)[0];
-  let content = selectedItem?.display;
-  if (props.renderValue && props.value != null) {
+  let selectedItem = props.items.find((item) => item.value === props.value);
+  let content = selectedItem?.title;
+
+  if (props.value != null && props.renderValue != null) {
     content = props.renderValue(content);
   }
 
@@ -56,7 +44,6 @@ let DropdownTree: FC<{
         content={content}
         placeholderClassName={props.placeholderClassName}
         placeholder={props.placeholder}
-        emptyLocale={props.emptyLocale}
         allowClear={props.allowClear}
         isActive={active}
         onClear={() => {
@@ -64,7 +51,7 @@ let DropdownTree: FC<{
         }}
       />
     ),
-    [props.disabled, props.value, props.items, content, active]
+    [props.disabled, props.value, props.items, active]
   );
 
   if (props.disabled) {
@@ -75,9 +62,8 @@ let DropdownTree: FC<{
     <DropdownArea
       hideClose={true}
       width={props.menuWidth}
+      cardClassName={styleMenu}
       adjustingPosition
-      cardStyle={props.style}
-      cardClassName={cx(styleMenu, props.cardClassName)}
       followWheel={props.followWheel}
       onExpand={(expand: boolean) => {
         setActive(expand);
@@ -87,12 +73,12 @@ let DropdownTree: FC<{
           return <div className={cx(center, styleEmptyList)}>{props.emptyLocale || "No data"}</div>;
         }
         return (
-          <MenuTree
-            selected={props.value as string}
-            data={props.items}
+          <MenuList
+            value={props.value}
+            items={props.items}
             className={props.menuClassName}
             itemClassName={props.itemClassName}
-            onChange={(value) => {
+            onSelect={(value) => {
               onClose();
               props.onSelect(value);
             }}
@@ -103,9 +89,9 @@ let DropdownTree: FC<{
       {inputElement}
     </DropdownArea>
   );
-});
+};
 
-export default DropdownTree;
+export default DropdownSelect;
 
 let styleMenu = css`
   min-height: 8px;

@@ -13,17 +13,21 @@ let ContentInput: FC<{
   allowClear?: boolean;
   placeholderClassName?: string;
   onClear?: () => void;
+  isActive?: boolean;
 }> = React.memo((props) => {
   /** Plugins */
   /** Methods */
   /** Effects */
   /** Renderers */
   return (
-    <div className={cx(rowParted, styleContainer, props.disabled ? styleDisabled : null, props.className)}>
+    <div
+      className={cx(rowParted, styleContainer, props.disabled ? styleDisabled : null, props.className)}
+      style={props.isActive ? { borderColor: "#3674ff" } : null}
+    >
       <span className={cx(styleValue)}>
         {props.content || <span className={cx(stylePlaceholder, props.placeholderClassName)}>{props.placeholder || "Please select"}</span>}
       </span>
-      <FaIcon name={EFaIcon.AngleDown} className={styleIcon} />
+      <FaIcon name={EFaIcon.AngleDown} className={styleIcon} style={props.isActive ? { transform: "rotate(180deg)" } : null} />
       {props.allowClear && props.content != null ? (
         <JimoIcon
           name={EJimoIcon.slimCross}
@@ -45,14 +49,22 @@ let ContentInput: FC<{
 export default ContentInput;
 
 let styleContainer = css`
+  height: 32px;
   line-height: 32px;
   padding: 0 12px;
-  border: 1px solid hsl(0, 0%, 85%);
-  border-radius: 4px;
+  border: 1px solid #e8e8e8;
+  border-radius: 2px;
   min-width: 120px;
   display: inline-flex;
   position: relative;
   background-color: white;
+
+  transition-property: border-color;
+  transition-duration: 300ms;
+
+  &:hover {
+    border-color: #3674ff;
+  }
 
   i.allow-clear.jimo-icon {
     opacity: 0;
@@ -64,24 +76,28 @@ let styleContainer = css`
 `;
 
 let stylePlaceholder = css`
-  color: hsl(0, 0%, 75%);
+  color: #979797;
+  font-size: 14px;
   user-select: none;
 `;
 
 let styleIcon = css`
-  color: hsla(0, 0%, 0%, 0.25);
+  color: #e1e1e1;
   user-select: none;
   margin-left: 8px;
-  font-size: 16px;
+  font-size: 20px !important;
+  transform: rotate(0deg);
+  transition-property: transform;
+  transition-duration: 300ms;
 `;
 
 let styleRemoveIcon = css`
-  font-size: 12px;
+  font-size: 10px;
   position: absolute;
   right: 9px;
-  height: 16px;
-  width: 16px;
-  line-height: 15px;
+  height: 13px;
+  width: 13px;
+  line-height: 12px;
   text-align: center;
   background-color: hsla(0, 0%, 80%);
   border-radius: 8px;
@@ -104,4 +120,7 @@ let styleValue = css`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  font-size: 14px;
+  line-height: 34px;
+  height: 32px;
 `;
