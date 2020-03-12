@@ -23,7 +23,6 @@ let DemoHooksArea: FC<{}> = React.memo((props) => {
           ref={triggerRef as Ref<any>}
           onClick={(event) => {
             openMenu();
-            event.stopPropagation();
           }}
         >
           open menu
