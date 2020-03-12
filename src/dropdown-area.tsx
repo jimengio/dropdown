@@ -2,9 +2,10 @@ import { css, cx } from "emotion";
 import { CSSTransition } from "react-transition-group";
 import EventEmitter from "eventemitter3";
 
-let transitionDuration = 160;
+let transitionDurationEnter = 120;
+let transitionDurationExit = 300;
 let relativeOffset = 4; /** 菜单相对弹出位置有一个上下偏差, 以免形成遮挡 */
-let containOffset = 2; /** 菜单相对弹出位置有一个左右偏差, 以便看起来不要过于死板 */
+let containOffset = 0; /** 菜单相对弹出位置有一个左右偏差, 以便看起来不要过于死板 */
 let containerName = "meson-dropdown-container";
 
 import React, { FC, useEffect, useState, ReactNode, CSSProperties, useRef, Ref } from "react";
@@ -32,6 +33,9 @@ interface IUseDropdownAreaProps {
 
   /** 强行监听 wheel 事件, 重新设置弹出菜单的位置 */
   followWheel?: boolean;
+
+  /** 监听打开、关闭 */
+  onExpand?: (visible: boolean) => void;
 }
 
 interface IProps extends IUseDropdownAreaProps {
@@ -63,6 +67,10 @@ export let useDropdownArea = (props: IUseDropdownAreaProps) => {
   let sessionToken = useRef<number>(null);
   let openTimeRef = useRef(0);
   let containerElRef = useRef<HTMLDivElement>();
+
+  const handleVisible = (isVisible: boolean) => {
+    if (props.onExpand) props.onExpand(isVisible);
+  };
 
   /** Methods */
 
@@ -103,6 +111,8 @@ export let useDropdownArea = (props: IUseDropdownAreaProps) => {
       return;
     }
 
+    handleVisible(true);
+
     handlePopPosition();
 
     // 记录打开时间, 打开过程关闭点击响应
@@ -117,13 +127,15 @@ export let useDropdownArea = (props: IUseDropdownAreaProps) => {
     }
 
     // 打开过程当中不响应点击事件
-    if (Date.now() - openTimeRef.current > transitionDuration) {
+    if (Date.now() - openTimeRef.current > transitionDurationEnter) {
       setVisible(false);
+      handleVisible(false);
     }
   };
 
   let onUserClose = () => {
     setVisible(false);
+    handleVisible(false);
   };
 
   /** Effects */
@@ -217,7 +229,7 @@ export let useDropdownArea = (props: IUseDropdownAreaProps) => {
 
     return ReactDOM.createPortal(
       <div className={styleAnimations} ref={containerElRef}>
-        <CSSTransition in={visible} unmountOnExit={true} classNames="dropdown" timeout={transitionDuration}>
+        <CSSTransition in={visible} unmountOnExit={true} classNames="dropdown" timeout={transitionDurationExit}>
           <div
             className={cx(column, stylePopPage, "popup-card", props.cardClassName)}
             ref={cardEl}
@@ -300,15 +312,15 @@ let styleAnimations = css`
     opacity: 0;
 
     &.popup-card {
-      transform: translate(0, -12px) scale(0.9);
+      transform: translate(0, -5px) scale(1);
     }
   }
   .dropdown-enter.dropdown-enter-active {
     opacity: 1;
-    transition-duration: ${transitionDuration}ms;
+    transition-duration: ${transitionDurationEnter}ms;
     &.popup-card {
       transform: translate(0px, 0px);
-      transition-duration: ${transitionDuration}ms;
+      transition-duration: ${transitionDurationEnter}ms;
     }
   }
   .dropdown-exit {
@@ -320,25 +332,27 @@ let styleAnimations = css`
   }
   .dropdown-exit.dropdown-exit-active {
     opacity: 0;
-    transition-duration: ${transitionDuration}ms;
+    transition-duration: ${transitionDurationExit}ms;
 
     &.popup-card {
-      transform: translate(0px, -12px) scale(0.9);
-      transition: ${transitionDuration}ms;
+      transform: translate(0px, -5px) scale(1);
+      transition: ${transitionDurationExit}ms;
     }
   }
 `;
 
 let stylePopPage = css`
+  border-radius: 2px;
+
   margin: auto;
   z-index: 1000; /* same as antd popups */
 
   position: fixed;
 
   background-color: white;
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.16);
+  box-shadow: 0px 1px 4px 0px rgba(2, 41, 128, 0.2);
 
-  min-width: 160px;
+  min-width: 220px;
   min-height: 80px;
 
   transform-origin: 50% -50%;

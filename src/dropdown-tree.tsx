@@ -1,4 +1,4 @@
-import React, { FC, useMemo, ReactNode, CSSProperties } from "react";
+import React, { FC, useMemo, ReactNode, CSSProperties, useState } from "react";
 import { css, cx } from "emotion";
 import ContentInput from "./content-input";
 import { flatMap } from "lodash-es";
@@ -46,6 +46,8 @@ let DropdownTree: FC<{
     content = props.renderValue(content);
   }
 
+  let [active, setActive] = useState<boolean>(false);
+
   let inputElement = useMemo(
     () => (
       <ContentInput
@@ -56,12 +58,13 @@ let DropdownTree: FC<{
         placeholder={props.placeholder}
         emptyLocale={props.emptyLocale}
         allowClear={props.allowClear}
+        isActive={active}
         onClear={() => {
           props.onSelect(null);
         }}
       />
     ),
-    [props.disabled, props.value, props.items, content]
+    [props.disabled, props.value, props.items, content, active]
   );
 
   if (props.disabled) {
@@ -76,6 +79,9 @@ let DropdownTree: FC<{
       cardStyle={props.style}
       cardClassName={cx(styleMenu, props.cardClassName)}
       followWheel={props.followWheel}
+      onExpand={(expand: boolean) => {
+        setActive(expand);
+      }}
       renderContent={(onClose) => {
         if (props.items.length === 0) {
           return <div className={cx(center, styleEmptyList)}>{props.emptyLocale || "No data"}</div>;

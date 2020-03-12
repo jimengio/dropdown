@@ -47,19 +47,20 @@ let styleItem = css`
   overflow: hidden;
   text-overflow: ellipsis;
   cursor: pointer;
-  color: hsla(0, 0%, 30%);
+  color: #323232;
   user-select: none;
+  font-size: 14px;
 
   &:hover {
-    background-color: hsl(199, 100%, 95%);
+    background: rgba(242, 245, 251, 1);
   }
 `;
 
 let styleSelected = css`
-  background-color: hsl(0, 0%, 98%);
-  color: black;
+  background: rgba(242, 245, 251, 1);
+  color: #3674ff;
 
   &:hover {
-    background-color: hsl(199, 100%, 95%);
+    background-color: rgba(242, 245, 251, 1);
   }
 `;

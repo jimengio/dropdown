@@ -12,7 +12,7 @@ function qsStringify(queries: { [k: string]: string }) {
 
 // generated
 
-// Generated with router-code-generator@0.2.6-a1
+// Generated with router-code-generator@0.2.6
 
 export let genRouter = {
   home: {
@@ -81,6 +81,12 @@ export let genRouter = {
     path: () => `/follow-wheel`,
     go: () => switchPath(`/follow-wheel`),
   },
+  dropdownSelect: {
+    name: "dropdown-select",
+    raw: "dropdown-select",
+    path: () => `/dropdown-select`,
+    go: () => switchPath(`/dropdown-select`),
+  },
   $: {
     name: "home",
     raw: "",
@@ -101,6 +107,7 @@ export type GenRouterTypeMain =
   | GenRouterTypeTree["dropdownTree"]
   | GenRouterTypeTree["ajustingPosition"]
   | GenRouterTypeTree["followWheel"]
+  | GenRouterTypeTree["dropdownSelect"]
   | GenRouterTypeTree["$"];
 
 export interface GenRouterTypeTree {
@@ -166,6 +173,12 @@ export interface GenRouterTypeTree {
   };
   followWheel: {
     name: "follow-wheel";
+    params: {};
+    query: {};
+    next: null;
+  };
+  dropdownSelect: {
+    name: "dropdown-select";
     params: {};
     query: {};
     next: null;

@@ -114,7 +114,7 @@ let styleMenuArea = css`
 `;
 
 let styleShortInput = css`
-  width: 160px;
+  width: 220px;
 `;
 
 let stylePlaceholder = css`
