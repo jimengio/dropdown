@@ -128,6 +128,14 @@
   resolved "https://registry.npmjs.org/@jimengio/flex-styles/-/flex-styles-0.1.6.tgz#d37e37aa4a85c72feff386c27b920a5f8c5f6335"
   integrity sha512-K5Ij+DrkQFgMc4MMWJOCsI8S26xUy6a1fe0JWEtQjwhrEGXwGv/w4coD19+uMcqtLO1HHasfN2NuoJNSh9g5ag==
 
+"@jimengio/jimo-basics@^0.0.16-a1":
+  version "0.0.16-a1"
+  resolved "https://registry.yarnpkg.com/@jimengio/jimo-basics/-/jimo-basics-0.0.16-a1.tgz#0129f6d21ac3b1475ad072517fdd9ac02758be2c"
+  integrity sha512-9ZtjR7lh3MEqGgnaPUek804ZsvJZBfflSe6ChMgJGasSkw8o+FeJTXdcZPdabKLs9NwGw++ZmTehfop85Fwtzw==
+  dependencies:
+    emotion "^10.0.27"
+    react-transition-group "^4.3.0"
+
 "@jimengio/jimo-icons@^0.3.6":
   version "0.3.6"
   resolved "https://registry.npmjs.org/@jimengio/jimo-icons/-/jimo-icons-0.3.6.tgz#c22e1b76bb7cb62e6fd195576839ecc83ff8186e"
@@ -4032,7 +4040,7 @@ react-is@^16.8.1:
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.13.0.tgz#0f37c3613c34fe6b37cd7f763a0d6293ab15c527"
   integrity sha512-GFMtL0vHkiBv9HluwNZTggSn/sCyEt9n02aM0dSAjGGyqyNlAyftYm4phPxdvCigG15JreC5biwxCgTAJZ7yAA==
 
-react-transition-group@^4.2.2:
+react-transition-group@^4.2.2, react-transition-group@^4.3.0:
   version "4.3.0"
   resolved "https://registry.npmjs.org/react-transition-group/-/react-transition-group-4.3.0.tgz#fea832e386cf8796c58b61874a3319704f5ce683"
   integrity sha512-1qRV1ZuVSdxPlPf4O8t7inxUGpdyO5zG9IoNfJxSO0ImU2A1YWkEQvFPuIPZmMLkg5hYs7vv5mMOyfgSkvAwvw==

@@ -1,6 +1,6 @@
 {
   "name": "@jimengio/dropdown",
-  "version": "0.1.27",
+  "version": "0.1.28-a1",
   "description": "",
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
@@ -89,6 +89,7 @@
   },
   "dependencies": {
     "@jimengio/flex-styles": "^0.1.5",
+    "@jimengio/jimo-basics": "^0.0.16-a1",
     "react-transition-group": "^4.2.2"
   }
 }
