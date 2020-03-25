@@ -115,7 +115,7 @@ let DemoDropdownTree: FC<{}> = React.memo((props) => {
 export default DemoDropdownTree;
 
 let styleMenu = css`
-  min-width: 240px;
+  min-width: 250px;
 `;
 
 let styleArea = css`

@@ -3,6 +3,8 @@ import { css, cx } from "emotion";
 import { rowMiddle, center } from "@jimengio/flex-styles";
 import FaIcon, { EFaIcon } from "@jimengio/fa-icons";
 
+import { ClampText } from "@jimengio/jimo-basics";
+
 let countAll = (xs: IMenuTreeItem[]) => {
   if (xs == null) {
     return 0;
@@ -43,13 +45,7 @@ let MenuTreeItem: FC<{
   return (
     <div>
       <div
-        className={cx(
-          rowMiddle,
-          styleItem,
-          props.selected === props.data.value ? styleSelected : null,
-          props.data.disabled ? styleDisabled : null,
-          props.itemClassName
-        )}
+        className={cx(rowMiddle, styleItem, props.data.disabled ? styleDisabled : null, props.itemClassName)}
         style={{ paddingLeft: props.level * 16 + 6 }}
         onClick={() => {
           if (props.data.disabled) {
@@ -78,7 +74,9 @@ let MenuTreeItem: FC<{
             />
           )}
         </div>
-        {props.data.display}
+        <div className={cx(styleDisplay, props.selected === props.data.value ? styleSelected : null)}>
+          <ClampText text={props.data.display} addTooltip />
+        </div>
       </div>
       <div className={cx(styleMenuContainer, folded ? styleFolded : null)}>
         {folded ? (
@@ -127,14 +125,10 @@ export default MenuTree;
 
 let styleItem = css`
   font-size: 14px;
-  line-height: 36px;
+  line-height: 37px;
   border-bottom: 1px solid hsla(0, 0%, 91%, 1);
   cursor: pointer;
-  color: #323232;
-
-  :hover {
-    background: rgba(242, 245, 251, 1);
-  }
+  color: hsla(0, 0%, 20%, 1);
 `;
 
 let stylePrepend = css`
@@ -144,14 +138,14 @@ let stylePrepend = css`
   color: hsla(0, 0%, 59%, 1);
 
   :hover {
-    color: hsla(200, 80%, 59%, 1);
+    color: hsla(0, 0%, 20%, 1);
   }
 `;
 
 let styleMenuContainer = css`
   transition-duration: 240ms;
-  transition-property: max-height opacity;
-  max-height: 1000px;
+  transition-property: opacity;
+  /* max-height: 1000px; */
   opacity: 1;
 `;
 
@@ -167,6 +161,7 @@ let stylePlaceholder = css`
 
 let styleSelected = css`
   background: rgba(242, 245, 251, 1);
+  color: hsla(221, 100%, 61%, 1);
 
   :hover {
     background: rgba(242, 245, 251, 1);
@@ -174,7 +169,7 @@ let styleSelected = css`
 `;
 
 let styleContainer = css`
-  padding: 0 8px;
+  padding: 0 10px;
 `;
 
 let styleDisabled = css`
@@ -184,5 +179,14 @@ let styleDisabled = css`
 
   :hover {
     background-color: white;
+  }
+`;
+
+let styleDisplay = css`
+  width: calc(100% - 20px);
+  padding-left: 2px;
+
+  :hover {
+    background: hsla(220, 53%, 97%, 1);
   }
 `;
