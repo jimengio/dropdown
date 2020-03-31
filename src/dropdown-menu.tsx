@@ -23,13 +23,14 @@ let DropdownMenu: FC<{
   allowClear?: boolean;
   renderValue?: (x: any) => ReactNode;
   followWheel?: boolean;
-
   /**
-   * open search
+   * search param
+   * 当存在onSearch时，内部search失效，onSearch回调最新的搜索值。一般用于需要异步加载数据时。
    */
   showSearch?: boolean;
   onSearch?: (text: string, event: React.ChangeEvent<HTMLInputElement>) => void;
   searchPlaceholder?: string;
+  serachWait?: number;
 }> = (props) => {
   /** Methods */
   /** Effects */
@@ -44,6 +45,9 @@ let DropdownMenu: FC<{
 
   let [active, setActive] = useState<boolean>(false);
   let [searchValue, setSearchValue] = useState<string>("");
+  let [stateItems, setStateItems] = useState<IMenuListItem[]>(props.items || []);
+
+  let items = props.onSearch ? props.items : stateItems;
 
   let inputElement = useMemo(
     () => (
@@ -60,22 +64,27 @@ let DropdownMenu: FC<{
         }}
       />
     ),
-    [props.disabled, props.value, props.items, active]
+    [props.disabled, props.value, items, active]
   );
 
   if (props.disabled) {
     return inputElement;
   }
 
-  const [debouncedChange] = useDebouncedCallback((v, e) => {
-    e.persist();
-    props.onSearch && props.onSearch(v, e);
-  }, 600);
+  const [debouncedChange] = useDebouncedCallback((val, event) => {
+    event.persist();
+    if (props.onSearch) {
+      props.onSearch(val, event);
+    } else {
+      if (!val) return setStateItems(props.items);
+      setStateItems(props.items.filter((d) => `${d.title}`.indexOf(val) > -1));
+    }
+  }, props.serachWait || 0);
 
   let onSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const val = event.target.value;
-    debouncedChange(val, event);
     setSearchValue(val);
+    debouncedChange(val, event);
   };
 
   let renderSearch = () => {
@@ -95,7 +104,11 @@ let DropdownMenu: FC<{
                 onClick={(event) => {
                   event.stopPropagation();
                   setSearchValue("");
-                  props.onSearch && props.onSearch("", null);
+                  if (props.onSearch) {
+                    props.onSearch("", null);
+                  } else {
+                    setStateItems(props.items);
+                  }
                 }}
                 name={EJimoIcon.crossEmbossed}
                 className={styleSearchClearIcon}
@@ -120,7 +133,7 @@ let DropdownMenu: FC<{
         setActive(expand);
       }}
       renderContent={(onClose) => {
-        if (props.items.length === 0) {
+        if (items.length === 0) {
           return (
             <>
               {props.showSearch ? renderSearch() : null}
@@ -133,7 +146,7 @@ let DropdownMenu: FC<{
             {props.showSearch ? renderSearch() : null}
             <MenuList
               value={props.value}
-              items={props.items}
+              items={items}
               className={props.menuClassName}
               itemClassName={props.itemClassName}
               onSelect={(value) => {

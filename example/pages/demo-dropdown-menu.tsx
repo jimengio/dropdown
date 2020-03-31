@@ -25,7 +25,6 @@ let items: IMenuListItem[] = [
 
 let DemoDropdownMenu: FC<{}> = (props) => {
   let [selected, setSelected] = useState<string>(null);
-  let [demoData, setDemoData] = useState<IMenuListItem[]>(items);
 
   /** Methods */
   /** Effects */
@@ -58,24 +57,20 @@ let DemoDropdownMenu: FC<{}> = (props) => {
         <DropdownMenu disabled value={selected} items={items} onSelect={(value) => setSelected(value as string)} placeholder={"请选择"} />
       </DocDemo>
       <DocDemo title="带搜索框的下拉菜单" link={link}>
-        <div className={styleMenuArea}>
-          <DocSnippet code={codeSearchMenu} />
+        <DocBlock content={searchMenuDescription} />
+        <DocSnippet code={codeSearchMenu} />
 
-          <DropdownMenu
-            showSearch
-            allowClear
-            className={styleShortInput}
-            value={selected}
-            items={demoData}
-            onSelect={(value) => setSelected(value as string)}
-            placeholder={"请选择"}
-            searchPlaceholder={"搜索内容"}
-            onSearch={(val) => {
-              if (!val) return setDemoData(items);
-              setDemoData(demoData.filter((d) => `${d.title}`.indexOf(val) > -1));
-            }}
-          />
-        </div>
+        <DropdownMenu
+          showSearch
+          allowClear
+          className={styleShortInput}
+          value={selected}
+          items={items}
+          onSelect={(value) => setSelected(value as string)}
+          placeholder={"请选择"}
+          searchPlaceholder={"搜索内容"}
+          serachWait={600}
+        />
       </DocDemo>
       <DocDemo title={"Empty locale"} link={link}>
         <DocSnippet code={codeEmpty} />
@@ -249,7 +244,12 @@ let codeSearchMenu = `
   items={demoData}
   onSelect={(value) => {}}
   placeholder={"请选择"}
+  serachWait={600}
   searchPlaceholder={"搜索内容"}
   onSearch={(val) => {}}
 />
+`;
+
+let searchMenuDescription = `
+\`onSearch\`属性存在时，关闭组件内部搜索功能， \`onSearch\`回调最新的搜索值，便于异步获取数据。
 `;
