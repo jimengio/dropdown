@@ -30,7 +30,7 @@ let DropdownMenu: FC<{
   showSearch?: boolean;
   onSearch?: (text: string, event: React.ChangeEvent<HTMLInputElement>) => void;
   searchPlaceholder?: string;
-  serachWait?: number;
+  searchWait?: number;
 }> = (props) => {
   /** Methods */
   /** Effects */
@@ -79,7 +79,7 @@ let DropdownMenu: FC<{
       if (!val) return setStateItems(props.items);
       setStateItems(props.items.filter((d) => `${d.title}`.indexOf(val) > -1));
     }
-  }, props.serachWait || 0);
+  }, props.searchWait || 0);
 
   let onSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const val = event.target.value;
