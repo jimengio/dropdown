@@ -69,7 +69,7 @@ let DemoDropdownMenu: FC<{}> = (props) => {
           onSelect={(value) => setSelected(value as string)}
           placeholder={"请选择"}
           searchPlaceholder={"搜索内容"}
-          serachWait={600}
+          searchWait={600}
         />
       </DocDemo>
       <DocDemo title={"Empty locale"} link={link}>
@@ -244,7 +244,7 @@ let codeSearchMenu = `
   items={demoData}
   onSelect={(value) => {}}
   placeholder={"请选择"}
-  serachWait={600}
+  searchWait={600}
   searchPlaceholder={"搜索内容"}
   onSearch={(val) => {}}
 />
