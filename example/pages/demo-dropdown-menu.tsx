@@ -4,31 +4,31 @@ import MenuList, { IMenuListItem } from "../../src/menu-list";
 import DropdownMenu from "../../src/dropdown-menu";
 import { DocDemo, DocBlock, DocSnippet } from "@jimengio/doc-frame";
 
+let items: IMenuListItem[] = [
+  {
+    value: "a",
+    title: "A",
+  },
+  {
+    value: "b",
+    title: "使用 optionLabelProp 指定回填到选择框的 Option 属性。uses B",
+  },
+  {
+    value: "c",
+    title: "多选，从已有条目中选择。",
+  },
+  {
+    value: "d",
+    title: "弹出一个下拉菜单给用户选择操作，用于代替原生的选择器，或者需要一个更优雅的多选器时。",
+  },
+];
+
 let DemoDropdownMenu: FC<{}> = (props) => {
   let [selected, setSelected] = useState<string>(null);
 
   /** Methods */
   /** Effects */
   /** Renderers */
-
-  let items: IMenuListItem[] = [
-    {
-      value: "a",
-      title: "A",
-    },
-    {
-      value: "b",
-      title: "使用 optionLabelProp 指定回填到选择框的 Option 属性。uses B",
-    },
-    {
-      value: "c",
-      title: "多选，从已有条目中选择。",
-    },
-    {
-      value: "d",
-      title: "弹出一个下拉菜单给用户选择操作，用于代替原生的选择器，或者需要一个更优雅的多选器时。",
-    },
-  ];
 
   let itemsWithCustom = [
     ...items,
@@ -55,6 +55,22 @@ let DemoDropdownMenu: FC<{}> = (props) => {
       <DocDemo title="Disabled menu" link={link}>
         <DocSnippet code={codeDisabled} />
         <DropdownMenu disabled value={selected} items={items} onSelect={(value) => setSelected(value as string)} placeholder={"请选择"} />
+      </DocDemo>
+      <DocDemo title="带搜索框的下拉菜单" link={link}>
+        <DocBlock content={searchMenuDescription} />
+        <DocSnippet code={codeSearchMenu} />
+
+        <DropdownMenu
+          showSearch
+          allowClear
+          className={styleShortInput}
+          value={selected}
+          items={items}
+          onSelect={(value) => setSelected(value as string)}
+          placeholder={"请选择"}
+          searchPlaceholder={"搜索内容"}
+          searchWait={600}
+        />
       </DocDemo>
       <DocDemo title={"Empty locale"} link={link}>
         <DocSnippet code={codeEmpty} />
@@ -217,4 +233,23 @@ let codeMenu = `
 
 let contentValue = `
 \`renderValue\` 属性, 可以用来重新定义 value 位置现实的具体内容. 幕刃情况下直接显示 value.
+`;
+
+let codeSearchMenu = `
+<DropdownMenu
+  showSearch
+  allowClear
+  className={styleShortInput}
+  value={selected}
+  items={demoData}
+  onSelect={(value) => {}}
+  placeholder={"请选择"}
+  searchWait={600}
+  searchPlaceholder={"搜索内容"}
+  onSearch={(val) => {}}
+/>
+`;
+
+let searchMenuDescription = `
+\`onSearch\`属性存在时，关闭组件内部搜索功能， \`onSearch\`回调最新的搜索值，便于异步获取数据。
 `;
