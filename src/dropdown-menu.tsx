@@ -45,9 +45,6 @@ let DropdownMenu: FC<{
 
   let [active, setActive] = useState<boolean>(false);
   let [searchValue, setSearchValue] = useState<string>("");
-  let [stateItems, setStateItems] = useState<IMenuListItem[]>(props.items || []);
-
-  let items = props.onSearch ? props.items : stateItems;
 
   let inputElement = useMemo(
     () => (
@@ -64,7 +61,7 @@ let DropdownMenu: FC<{
         }}
       />
     ),
-    [props.disabled, props.value, items, active]
+    [props.disabled, props.value, props.items, active]
   );
 
   if (props.disabled) {
@@ -75,9 +72,6 @@ let DropdownMenu: FC<{
     event.persist();
     if (props.onSearch) {
       props.onSearch(val, event);
-    } else {
-      if (!val) return setStateItems(props.items);
-      setStateItems(props.items.filter((d) => `${d.title}`.indexOf(val) > -1));
     }
   }, props.searchWait || 0);
 
@@ -106,8 +100,6 @@ let DropdownMenu: FC<{
                   setSearchValue("");
                   if (props.onSearch) {
                     props.onSearch("", null);
-                  } else {
-                    setStateItems(props.items);
                   }
                 }}
                 name={EJimoIcon.crossEmbossed}
@@ -121,6 +113,8 @@ let DropdownMenu: FC<{
       </div>
     );
   };
+
+  const items = props.showSearch ? (props.onSearch ? props.items : props.items.filter((d) => `${d.title}`.indexOf(searchValue) > -1)) : props.items;
 
   return (
     <DropdownArea
