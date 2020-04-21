@@ -8,7 +8,7 @@ import JimoIcon, { EJimoIcon } from "@jimengio/jimo-icons";
 import ContentInput from "./content-input";
 import { useDebouncedCallback } from "use-debounce";
 
-let DropdownMenu: FC<{
+export interface IDropdownMenuProps {
   value: MenuValue;
   items: IMenuListItem[];
   onSelect: (value: MenuValue) => void;
@@ -31,7 +31,9 @@ let DropdownMenu: FC<{
   onSearch?: (text: string, event: React.ChangeEvent<HTMLInputElement>) => void;
   searchPlaceholder?: string;
   searchWait?: number;
-}> = (props) => {
+}
+
+let DropdownMenu: FC<IDropdownMenuProps> = (props) => {
   /** Methods */
   /** Effects */
   /** Renderers */

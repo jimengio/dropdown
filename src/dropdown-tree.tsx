@@ -17,7 +17,7 @@ let findInTree = (value: string, items: IMenuTreeItem[]): IMenuTreeItem[] => {
   });
 };
 
-let DropdownTree: FC<{
+export interface IDropdownTreeProps {
   value: string;
   items: IMenuTreeItem[];
   onSelect: (value: string) => void;
@@ -34,7 +34,9 @@ let DropdownTree: FC<{
   allowClear?: boolean;
   renderValue?: (x: any) => ReactNode;
   followWheel?: boolean;
-}> = React.memo((props) => {
+}
+
+let DropdownTree: FC<IDropdownTreeProps> = React.memo((props) => {
   /** Plugins */
   /** Methods */
   /** Effects */
