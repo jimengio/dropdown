@@ -94,7 +94,7 @@ let styleIcon = css`
 let styleRemoveIcon = css`
   font-size: 10px;
   position: absolute;
-  right: 9px;
+  right: 12px;
   height: 13px;
   width: 13px;
   line-height: 12px;
