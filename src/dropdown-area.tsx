@@ -64,13 +64,8 @@ export let useDropdownArea = (props: IUseDropdownAreaProps) => {
   let el = useRef<HTMLDivElement>(null);
   let triggerEl = useRef<HTMLDivElement>(null);
   let cardEl = useRef<HTMLDivElement>(null);
-  let sessionToken = useRef<number>(null);
   let openTimeRef = useRef(0);
   let containerElRef = useRef<HTMLDivElement>();
-
-  const handleVisible = (isVisible: boolean) => {
-    if (props.onExpand) props.onExpand(isVisible);
-  };
 
   /** Methods */
 
@@ -111,8 +106,6 @@ export let useDropdownArea = (props: IUseDropdownAreaProps) => {
       return;
     }
 
-    handleVisible(true);
-
     handlePopPosition();
 
     // 记录打开时间, 打开过程关闭点击响应
@@ -129,13 +122,11 @@ export let useDropdownArea = (props: IUseDropdownAreaProps) => {
     // 打开过程当中不响应点击事件
     if (Date.now() - openTimeRef.current > transitionDurationEnter) {
       setVisible(false);
-      handleVisible(false);
     }
   };
 
   let onUserClose = () => {
     setVisible(false);
-    handleVisible(false);
   };
 
   /** Effects */
@@ -197,7 +188,6 @@ export let useDropdownArea = (props: IUseDropdownAreaProps) => {
   let wheelChangeHandler = useRef<FuncVoid>();
   wheelChangeHandler.current = () => {
     if (visible) {
-      console.log;
       handlePopPosition();
     }
   };
@@ -213,6 +203,16 @@ export let useDropdownArea = (props: IUseDropdownAreaProps) => {
       };
     }
   }, []);
+
+  // this is a change listener, leading call is skipped on purpose, visible state may got mirrored in parent
+  let readyToEmitChange = useRef(false);
+  useEffect(() => {
+    if (readyToEmitChange.current) {
+      props.onExpand?.(visible);
+    } else {
+      readyToEmitChange.current = true;
+    }
+  }, [visible]);
 
   /** Renderers */
 
