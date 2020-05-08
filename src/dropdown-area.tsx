@@ -86,7 +86,7 @@ export let useDropdownArea = (props: IUseDropdownAreaProps) => {
 
     almostOut = rect.left + cardWidth + relativeOffset > window.innerWidth;
 
-    reachingBottom = rect.bottom + cardHeight > window.innerHeight;
+    reachingBottom = rect.bottom + cardHeight + relativeOffset > window.innerHeight;
 
     let yPosition = {
       top: rect.bottom + relativeOffset,

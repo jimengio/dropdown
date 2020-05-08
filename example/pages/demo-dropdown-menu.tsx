@@ -56,22 +56,6 @@ let DemoDropdownMenu: FC<{}> = (props) => {
         <DocSnippet code={codeDisabled} />
         <DropdownMenu disabled value={selected} items={items} onSelect={(value) => setSelected(value as string)} placeholder={"请选择"} />
       </DocDemo>
-      <DocDemo title="带搜索框的下拉菜单" link={link}>
-        <DocBlock content={searchMenuDescription} />
-        <DocSnippet code={codeSearchMenu} />
-
-        <DropdownMenu
-          showSearch
-          allowClear
-          className={styleShortInput}
-          value={selected}
-          items={items}
-          onSelect={(value) => setSelected(value as string)}
-          placeholder={"请选择"}
-          searchPlaceholder={"搜索内容"}
-          searchWait={600}
-        />
-      </DocDemo>
       <DocDemo title={"Empty locale"} link={link}>
         <DocSnippet code={codeEmpty} />
         <DropdownMenu value={selected} items={[]} onSelect={(value) => setSelected(value as string)} placeholder={"请选择"} emptyLocale={"没有数据"} />
@@ -233,23 +217,4 @@ let codeMenu = `
 
 let contentValue = `
 \`renderValue\` 属性, 可以用来重新定义 value 位置现实的具体内容. 幕刃情况下直接显示 value.
-`;
-
-let codeSearchMenu = `
-<DropdownMenu
-  showSearch
-  allowClear
-  className={styleShortInput}
-  value={selected}
-  items={demoData}
-  onSelect={(value) => {}}
-  placeholder={"请选择"}
-  searchWait={600}
-  searchPlaceholder={"搜索内容"}
-  onSearch={(val) => {}}
-/>
-`;
-
-let searchMenuDescription = `
-\`onSearch\`属性存在时，关闭组件内部搜索功能， \`onSearch\`回调最新的搜索值，便于异步获取数据。
 `;

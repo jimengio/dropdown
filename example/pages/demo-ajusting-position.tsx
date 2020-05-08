@@ -18,7 +18,7 @@ let DemoAjustingPosition: FC<{}> = React.memo((props) => {
         </DropdownArea>
       </DocDemo>
 
-      <DocDemo title="Adjusting Position">
+      <DocDemo title="Position">
         <DocBlock content={content} />
         <DocSnippet code={code} />
         <DropdownArea
@@ -46,7 +46,6 @@ let styleTrigger = css`
 
 let codeEdge = `
 <DropdownArea
-  guessHeight={80}
   className={cx(styleTrigger)}
   width={400}
   hideClose
@@ -57,8 +56,7 @@ let codeEdge = `
 `;
 
 let content = `
-\`adjustingPosition\` 属性可以开启位置调整, 如果发现超出屏幕, 自动调整位置.
-监听的是 wheel 事件, 根据触发频率对效果影响, 可能对性能有影响.
+下方空间不够的时候, 菜单会改为往上弹出.
 `;
 
 let code = `
@@ -75,8 +73,5 @@ let code = `
 `;
 
 let contentEdge = `
-组件默认不处理弹层在屏幕边缘的情况, 组件默认对于弹出内容的高度没有准确的值.
-一个临时方案是通过 \`guessHeight\` 属性赋予一个估计值, 给组件计算避免超出可见区域.
-
-设定了 \`width\` 的情况下, 横向可以检测是否超出屏幕区域.
+超出屏幕横向区域的卡片会被纠正回到屏幕内.
 `;

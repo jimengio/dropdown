@@ -4,7 +4,7 @@ import { css, cx } from "emotion";
 import { row, fullHeight, fullscreen, expand } from "@jimengio/flex-styles";
 
 import { HashRedirect, findRouteTarget } from "@jimengio/ruled-router/lib/dom";
-import { genRouter, GenRouterTypeMain } from "controller/generated-router";
+import { genRouter, GenRouterTypeTree } from "controller/generated-router";
 import { DocSidebar, ISidebarEntry } from "@jimengio/doc-frame";
 import DemoDropdownArea from "./demo-dropdown-area";
 import DemoDropdownAreaScroll from "./demo-dropdown-area-scroll";
@@ -16,8 +16,9 @@ import DemoAjustingPosition from "./demo-ajusting-position";
 import DemoFollowWheel from "./demo-follow-wheel";
 import DemoHooksArea from "./demo-hooks-area";
 import DemoCustomTrigger from "./demo-custom-trigger";
+import DemoDropdownMenuSearch from "./demo-dropdown-menu-search";
 
-const renderChildPage = (routerTree: GenRouterTypeMain) => {
+const renderChildPage = (routerTree: GenRouterTypeTree["next"]) => {
   if (routerTree != null) {
     switch (routerTree.name) {
       case "dropdown-area":
@@ -26,6 +27,8 @@ const renderChildPage = (routerTree: GenRouterTypeMain) => {
         return <DemoDropdownAreaScroll />;
       case "dropdown-menu":
         return <DemoDropdownMenu />;
+      case "dropdown-menu-search":
+        return <DemoDropdownMenuSearch />;
       case "content-input":
         return <DemoContentInput />;
       case "menu-tree":
@@ -61,12 +64,20 @@ let items: ISidebarEntry[] = [
     path: genRouter.dropdownAreaScroll.name,
   },
   {
+    title: "Position",
+    path: genRouter.ajustingPosition.name,
+  },
+  {
     title: "Custom trigger",
     path: genRouter.customTrigger.name,
   },
   {
     title: "Dropdown menu",
     path: genRouter.dropdownMenu.name,
+  },
+  {
+    title: "Dropdown menu search",
+    path: genRouter.dropdownMenuSearch.name,
   },
   {
     title: "Content input",
@@ -79,10 +90,6 @@ let items: ISidebarEntry[] = [
   {
     title: "Dropdown tree",
     path: genRouter.dropdownTree.name,
-  },
-  {
-    title: "Adjusting position",
-    path: genRouter.ajustingPosition.name,
   },
   {
     title: "Follow Wheel",
@@ -99,7 +106,7 @@ let onSwitch = (path: string) => {
   }
 };
 
-export default (props: { router: GenRouterTypeMain }) => {
+export default (props: { router: GenRouterTypeTree["next"] }) => {
   return (
     <div className={cx(row, fullscreen, styleContainer)}>
       <DocSidebar title="Dropdown" currentPath={props.router.name} items={items} onSwitch={(item) => onSwitch(item.path)} />
