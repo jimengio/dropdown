@@ -32,5 +32,8 @@ export const routerRules: IRouteRule[] = [
   {
     path: "follow-wheel",
   },
+  {
+    path: "dropdown-menu-search",
+  },
   { path: "", name: "home" },
 ];

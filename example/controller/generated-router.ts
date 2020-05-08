@@ -12,7 +12,7 @@ function qsStringify(queries: { [k: string]: string }) {
 
 // generated
 
-// Generated with router-code-generator@0.2.6
+// Generated with router-code-generator@0.2.7
 
 export let genRouter = {
   home: {
@@ -81,11 +81,11 @@ export let genRouter = {
     path: () => `/follow-wheel`,
     go: () => switchPath(`/follow-wheel`),
   },
-  dropdownSelect: {
-    name: "dropdown-select",
-    raw: "dropdown-select",
-    path: () => `/dropdown-select`,
-    go: () => switchPath(`/dropdown-select`),
+  dropdownMenuSearch: {
+    name: "dropdown-menu-search",
+    raw: "dropdown-menu-search",
+    path: () => `/dropdown-menu-search`,
+    go: () => switchPath(`/dropdown-menu-search`),
   },
   $: {
     name: "home",
@@ -95,22 +95,24 @@ export let genRouter = {
   },
 };
 
-export type GenRouterTypeMain =
-  | GenRouterTypeTree["home"]
-  | GenRouterTypeTree["dropdownArea"]
-  | GenRouterTypeTree["hooksArea"]
-  | GenRouterTypeTree["dropdownAreaScroll"]
-  | GenRouterTypeTree["customTrigger"]
-  | GenRouterTypeTree["dropdownMenu"]
-  | GenRouterTypeTree["contentInput"]
-  | GenRouterTypeTree["menuTree"]
-  | GenRouterTypeTree["dropdownTree"]
-  | GenRouterTypeTree["ajustingPosition"]
-  | GenRouterTypeTree["followWheel"]
-  | GenRouterTypeTree["dropdownSelect"]
-  | GenRouterTypeTree["$"];
+/** Deprecating, use GenRouterTypeTree["next"] instead */
+export type GenRouterTypeMain = GenRouterTypeTree["next"];
 
 export interface GenRouterTypeTree {
+  next:
+    | GenRouterTypeTree["home"]
+    | GenRouterTypeTree["dropdownArea"]
+    | GenRouterTypeTree["hooksArea"]
+    | GenRouterTypeTree["dropdownAreaScroll"]
+    | GenRouterTypeTree["customTrigger"]
+    | GenRouterTypeTree["dropdownMenu"]
+    | GenRouterTypeTree["contentInput"]
+    | GenRouterTypeTree["menuTree"]
+    | GenRouterTypeTree["dropdownTree"]
+    | GenRouterTypeTree["ajustingPosition"]
+    | GenRouterTypeTree["followWheel"]
+    | GenRouterTypeTree["dropdownMenuSearch"]
+    | GenRouterTypeTree["$"];
   home: {
     name: "home";
     params: {};
@@ -177,8 +179,8 @@ export interface GenRouterTypeTree {
     query: {};
     next: null;
   };
-  dropdownSelect: {
-    name: "dropdown-select";
+  dropdownMenuSearch: {
+    name: "dropdown-menu-search";
     params: {};
     query: {};
     next: null;
