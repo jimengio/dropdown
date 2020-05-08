@@ -22,20 +22,21 @@ interface IUseDropdownAreaProps {
   /** 菜单对准右侧, 从右往左弹出 */
   alignToRight?: boolean;
   width?: number;
-  /** 不一定精确, 根据区域检测如果超出屏幕, 菜单将上移放在屏幕边缘 */
-  guessHeight?: number;
   renderContent: (closeMenu: FuncVoid) => ReactNode;
   hideClose?: boolean;
   // 设置弹出卡片样式
   cardStyle?: CSSProperties;
-
-  adjustingPosition?: true;
 
   /** 强行监听 wheel 事件, 重新设置弹出菜单的位置 */
   followWheel?: boolean;
 
   /** 监听打开、关闭 */
   onExpand?: (visible: boolean) => void;
+
+  /** DEPRECATED */
+  guessHeight?: number;
+  /** DEPRECATED */
+  adjustingPosition?: true;
 }
 
 interface IProps extends IUseDropdownAreaProps {
@@ -72,33 +73,64 @@ export let useDropdownArea = (props: IUseDropdownAreaProps) => {
   let handlePopPosition = () => {
     let rect = triggerEl.current.getBoundingClientRect();
 
+    // TODO, 目前用法高度比较简单, 但是复杂的情况还是可能出现宽度改变以后高度不准确
+    let cardHeight = cardEl.current.offsetHeight;
+
+    // 计算过程当中, 宽度还没准确设定好, 按照设定逻辑提前计算
+    // props.width 或者按照触发元素的宽度, 但是最小值 220px
+    let cardWidth = Math.max(props.width || rect.width, 220);
+
     // 如果计算宽度超出显示区域, 往左弹出
     let almostOut = false;
     let reachingBottom = false;
-    if (props.width != null) {
-      almostOut = rect.left + props.width > window.innerWidth;
-    }
-    if (props.guessHeight != null) {
-      reachingBottom = rect.bottom + props.guessHeight > window.innerHeight;
+
+    almostOut = rect.left + cardWidth + relativeOffset > window.innerWidth;
+
+    reachingBottom = rect.bottom + cardHeight > window.innerHeight;
+
+    let yPosition = {
+      top: rect.bottom + relativeOffset,
+      bottom: null,
+    };
+
+    if (reachingBottom) {
+      if (rect.top > cardHeight) {
+        yPosition = {
+          top: rect.top - relativeOffset - cardHeight,
+          bottom: null,
+        };
+      } else {
+        yPosition = {
+          top: window.innerHeight - relativeOffset - cardHeight,
+          bottom: null,
+        };
+      }
     }
 
-    if (props.alignToRight || almostOut) {
-      setVisible(true);
-      setInheritedWidth(rect.width);
-      setPosition({
-        top: reachingBottom ? null : rect.bottom + relativeOffset,
-        right: Math.max(window.innerWidth - rect.right - containOffset, relativeOffset),
-        bottom: reachingBottom ? 8 : null,
-      });
-    } else {
-      setVisible(true);
-      setInheritedWidth(rect.width);
-      setPosition({
-        top: reachingBottom ? null : rect.bottom + relativeOffset,
-        left: Math.max(rect.left - containOffset, relativeOffset),
-        bottom: reachingBottom ? 8 : null,
-      });
+    let xPosition = {
+      left: Math.max(rect.left - containOffset, relativeOffset),
+      right: null,
+    };
+
+    if (almostOut) {
+      xPosition = {
+        left: window.innerWidth - relativeOffset - cardWidth,
+        right: null,
+      };
     }
+
+    if (props.alignToRight) {
+      xPosition = {
+        left: Math.min(rect.right - cardWidth, window.innerWidth - relativeOffset - cardWidth),
+        right: null,
+      };
+    }
+
+    // console.log("xPostion:", xPosition, rect);
+    // console.log("width:", almostOut, props.alignToRight, cardWidth, window.innerWidth);
+
+    setInheritedWidth(rect.width);
+    setPosition(Object.assign({}, xPosition, yPosition));
   };
 
   let openMenu = () => {
@@ -106,7 +138,7 @@ export let useDropdownArea = (props: IUseDropdownAreaProps) => {
       return;
     }
 
-    handlePopPosition();
+    setVisible(true);
 
     // 记录打开时间, 打开过程关闭点击响应
     openTimeRef.current = Date.now();
@@ -162,27 +194,12 @@ export let useDropdownArea = (props: IUseDropdownAreaProps) => {
   }, []);
 
   useEffect(() => {
-    if (props.adjustingPosition && visible) {
+    if (visible) {
       // 如果计算宽度超出显示区域, 往左弹出
 
-      let almostOut = position.left + cardEl.current.offsetWidth > window.innerWidth;
-      let reachingBottom = position.top + cardEl.current.offsetHeight > window.innerHeight;
-
-      if (almostOut || reachingBottom) {
-        let newPosition: IPosition = { ...position };
-        if (reachingBottom) {
-          newPosition.top = null;
-          newPosition.bottom = 8;
-        }
-        if (almostOut) {
-          newPosition.right = 8;
-          newPosition.left = null;
-        }
-        console.warn("Moving back into screeen:", newPosition, "from", position);
-        setPosition(newPosition);
-      }
+      handlePopPosition();
     }
-  });
+  }, [visible]);
 
   // bypass closure issue with a ref
   let wheelChangeHandler = useRef<FuncVoid>();
@@ -228,14 +245,13 @@ export let useDropdownArea = (props: IUseDropdownAreaProps) => {
     );
 
     return ReactDOM.createPortal(
-      <div className={styleAnimations} ref={containerElRef}>
+      <div className={styleDownAnimations} ref={containerElRef}>
         <CSSTransition in={visible} unmountOnExit={true} classNames="dropdown" timeout={transitionDurationExit}>
           <div
             className={cx(column, stylePopPage, "popup-card", props.cardClassName)}
             ref={cardEl}
             style={{
               overflow: "auto",
-              maxHeight: window.innerHeight - 80,
               width: props.width || inheritedWidth,
               top: position.top,
               bottom: position.bottom,
@@ -307,7 +323,7 @@ let DropdownArea: FC<IProps> = React.memo((props) => {
 
 export default DropdownArea;
 
-let styleAnimations = css`
+let styleDownAnimations = css`
   .dropdown-enter {
     opacity: 0;
 
@@ -354,6 +370,7 @@ let stylePopPage = css`
 
   min-width: 220px;
   min-height: 80px;
+  max-height: 360px;
 
   transform-origin: 50% -50%;
 

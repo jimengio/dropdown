@@ -206,6 +206,7 @@ let styleSearchIcon = css`
   font-size: 23px;
   right: 15px;
   top: 13px;
+  line-height: 23px;
   color: hsla(0, 0%, 59%, 1);
 `;
 

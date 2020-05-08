@@ -13,7 +13,7 @@ let DemoAjustingPosition: FC<{}> = React.memo((props) => {
       <DocDemo title="Detect edge">
         <DocBlock content={contentEdge} />
         <DocSnippet code={codeEdge} />
-        <DropdownArea guessHeight={80} className={cx(styleTrigger)} width={400} renderContent={(onClose) => "Some content"} hideClose>
+        <DropdownArea className={cx(styleTrigger)} width={400} renderContent={(onClose) => "Some content"} hideClose>
           <div>detect edge</div>
         </DropdownArea>
       </DocDemo>
