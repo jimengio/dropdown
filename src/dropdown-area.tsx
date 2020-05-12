@@ -283,7 +283,7 @@ export let useDropdownArea = (props: IUseDropdownAreaProps) => {
                 className={styleAngle}
                 style={{
                   // magic numbers to position angle
-                  transform: position.atBottom ? "translate(-15px, 14px) rotate(-135deg)" : "rotate(45deg) translate(0px, -3px)",
+                  transform: position.atBottom ? "translate(-9px, 9px) rotate(-135deg)" : "rotate(45deg) translate(0px, -2px)",
                 }}
               ></div>
             </div>
@@ -416,15 +416,15 @@ let styleTrigger = css`
 `;
 
 let styleAngle = css`
-  width: 12px;
-  height: 12px;
-  border-width: 6px;
+  width: 8px;
+  height: 8px;
+  border-width: 4px;
   border-style: solid;
   border-color: white transparent transparent white;
   pointer-events: none;
 
   transform-origin: 50% -50%;
-  box-shadow: -1px -1px 2px hsla(0, 0%, 0%, 0.1);
+  box-shadow: -1px -1px 2px hsla(0, 0%, 0%, 0.08);
 `;
 
 let styleAngleWrapper = css`
