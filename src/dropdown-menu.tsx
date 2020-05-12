@@ -127,6 +127,9 @@ let DropdownMenu: FC<IDropdownMenuProps> = (props) => {
       followWheel={props.followWheel}
       onExpand={(expand: boolean) => {
         setActive(expand);
+        if (!expand) {
+          setSearchValue("");
+        }
       }}
       renderContent={(onClose) => {
         if (items.length === 0) {
