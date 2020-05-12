@@ -5,7 +5,6 @@ import EventEmitter from "eventemitter3";
 let transitionDurationEnter = 120;
 let transitionDurationExit = 300;
 let relativeOffset = 4; /** 菜单相对弹出位置有一个上下偏差, 以免形成遮挡 */
-let containOffset = 0; /** 菜单相对弹出位置有一个左右偏差, 以便看起来不要过于死板 */
 let containerName = "meson-dropdown-container";
 
 import React, { FC, useEffect, useState, ReactNode, CSSProperties, useRef, Ref } from "react";
@@ -33,6 +32,10 @@ interface IUseDropdownAreaProps {
   /** 监听打开、关闭 */
   onExpand?: (visible: boolean) => void;
 
+  /** hard code position transforming when necessary */
+  transformCardPosition?: (p: IPosition) => IPosition;
+  showAngle?: boolean;
+
   /** DEPRECATED */
   guessHeight?: number;
   /** DEPRECATED */
@@ -51,10 +54,11 @@ interface IProps extends IUseDropdownAreaProps {
 }
 
 interface IPosition {
-  top?: number;
-  bottom?: number;
-  left?: number;
-  right?: number;
+  top: number;
+  left: number;
+  angleTop: number;
+  angleLeft: number;
+  atBottom: boolean;
 }
 
 export let useDropdownArea = (props: IUseDropdownAreaProps) => {
@@ -88,49 +92,39 @@ export let useDropdownArea = (props: IUseDropdownAreaProps) => {
 
     reachingBottom = rect.bottom + cardHeight + relativeOffset > window.innerHeight;
 
-    let yPosition = {
-      top: rect.bottom + relativeOffset,
-      bottom: null,
-    };
+    let positionTop = rect.bottom + relativeOffset;
 
     if (reachingBottom) {
       if (rect.top > cardHeight) {
-        yPosition = {
-          top: rect.top - relativeOffset - cardHeight,
-          bottom: null,
-        };
+        positionTop = rect.top - relativeOffset - cardHeight;
       } else {
-        yPosition = {
-          top: window.innerHeight - relativeOffset - cardHeight,
-          bottom: null,
-        };
+        positionTop = window.innerHeight - relativeOffset - cardHeight;
       }
     }
 
-    let xPosition = {
-      left: Math.max(rect.left - containOffset, relativeOffset),
-      right: null,
-    };
-
+    let positionLeft = Math.max(rect.left, relativeOffset);
     if (almostOut) {
-      xPosition = {
-        left: window.innerWidth - relativeOffset - cardWidth,
-        right: null,
-      };
+      positionLeft = window.innerWidth - relativeOffset - cardWidth;
     }
 
     if (props.alignToRight) {
-      xPosition = {
-        left: Math.min(rect.right - cardWidth, window.innerWidth - relativeOffset - cardWidth),
-        right: null,
-      };
+      positionLeft = Math.min(rect.right - cardWidth, window.innerWidth - relativeOffset - cardWidth);
     }
 
     // console.log("xPostion:", xPosition, rect);
     // console.log("width:", almostOut, props.alignToRight, cardWidth, window.innerWidth);
 
     setInheritedWidth(rect.width);
-    setPosition(Object.assign({}, xPosition, yPosition));
+
+    setPosition({
+      left: positionLeft,
+      top: positionTop,
+
+      atBottom: reachingBottom,
+      //
+      angleLeft: rect.left + rect.width / 2,
+      angleTop: reachingBottom ? rect.top - relativeOffset : rect.bottom + relativeOffset,
+    });
   };
 
   let openMenu = () => {
@@ -233,6 +227,11 @@ export let useDropdownArea = (props: IUseDropdownAreaProps) => {
 
   /** Renderers */
 
+  // transform card position when necessary
+  if (props.transformCardPosition != null) {
+    position = props.transformCardPosition(position);
+  }
+
   let renderDropdown = () => {
     let getSvg = (color: string, width: number, height: number) => (
       <svg width={width} height={height} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44">
@@ -254,9 +253,7 @@ export let useDropdownArea = (props: IUseDropdownAreaProps) => {
               overflow: "auto",
               width: props.width || inheritedWidth,
               top: position.top,
-              bottom: position.bottom,
               left: position.left,
-              right: position.right,
               ...props.cardStyle,
             }}
           >
@@ -273,6 +270,25 @@ export let useDropdownArea = (props: IUseDropdownAreaProps) => {
             {props.renderContent(onUserClose)}
           </div>
         </CSSTransition>
+        {props.showAngle ? (
+          <CSSTransition in={visible} unmountOnExit={true} classNames="dropdown" timeout={transitionDurationExit}>
+            <div
+              className={cx("popup-card", styleAngleWrapper)}
+              style={{
+                left: position.angleLeft,
+                top: position.angleTop,
+              }}
+            >
+              <div
+                className={styleAngle}
+                style={{
+                  // magic numbers to position angle
+                  transform: position.atBottom ? "translate(-15px, 14px) rotate(-135deg)" : "rotate(45deg) translate(0px, -3px)",
+                }}
+              ></div>
+            </div>
+          </CSSTransition>
+        ) : null}
       </div>,
       el.current
     );
@@ -397,4 +413,22 @@ let styleCloseIcon = css`
 let styleTrigger = css`
   cursor: pointer;
   display: inline-block;
+`;
+
+let styleAngle = css`
+  width: 12px;
+  height: 12px;
+  border-width: 6px;
+  border-style: solid;
+  border-color: white transparent transparent white;
+  pointer-events: none;
+
+  transform-origin: 50% -50%;
+  box-shadow: -1px -1px 2px hsla(0, 0%, 0%, 0.1);
+`;
+
+let styleAngleWrapper = css`
+  position: fixed;
+  z-index: 1001;
+  transition-timing-function: linear;
 `;

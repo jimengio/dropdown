@@ -17,6 +17,7 @@ import DemoFollowWheel from "./demo-follow-wheel";
 import DemoHooksArea from "./demo-hooks-area";
 import DemoCustomTrigger from "./demo-custom-trigger";
 import DemoDropdownMenuSearch from "./demo-dropdown-menu-search";
+import DemoAngle from "./demo-angle";
 
 const renderChildPage = (routerTree: GenRouterTypeTree["next"]) => {
   if (routerTree != null) {
@@ -43,6 +44,8 @@ const renderChildPage = (routerTree: GenRouterTypeTree["next"]) => {
         return <DemoHooksArea />;
       case "custom-trigger":
         return <DemoCustomTrigger />;
+      case "angle":
+        return <DemoAngle />;
       default:
         return <HashRedirect to={genRouter.dropdownArea.path()} noDelay />;
     }
@@ -94,6 +97,10 @@ let items: ISidebarEntry[] = [
   {
     title: "Follow Wheel",
     path: genRouter.followWheel.name,
+  },
+  {
+    title: "Angle",
+    path: genRouter.angle.name,
   },
 ];
 
