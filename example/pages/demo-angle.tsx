@@ -12,7 +12,7 @@ let DemoAngle: FC<{ className?: string }> = React.memo((props) => {
     <div className={props.className}>
       <DocDemo title="Card with angle">
         <DocBlock content={content} />
-        <DropdownArea className={styleTrigger} renderContent={(onClose) => "Some content"} showAngle>
+        <DropdownArea className={styleTrigger} renderContent={(onClose) => "Some content"} showArrow>
           <div>No title</div>
         </DropdownArea>
 
@@ -34,11 +34,11 @@ let codeAngle = `
 <DropdownArea
   className={styleTrigger}
   renderContent={(onClose) => "Some content"}
-  showAngle>
+  showArrow>
   <div>No title</div>
 </DropdownArea>
 `;
 
 let content = `
-可以开启 \`showAngle\` 显示一个菜单的箭头. 特殊情况可以通过 \`transformCardPosition\` 控制调整显示的位置.
+可以开启 \`showArrow\` 显示一个菜单的箭头. 特殊情况可以通过 \`transformCardPosition\` 控制调整显示的位置.
 `;
