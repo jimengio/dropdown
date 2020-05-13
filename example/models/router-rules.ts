@@ -35,5 +35,8 @@ export const routerRules: IRouteRule[] = [
   {
     path: "dropdown-menu-search",
   },
+  {
+    path: "angle",
+  },
   { path: "", name: "home" },
 ];

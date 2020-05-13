@@ -87,6 +87,12 @@ export let genRouter = {
     path: () => `/dropdown-menu-search`,
     go: () => switchPath(`/dropdown-menu-search`),
   },
+  angle: {
+    name: "angle",
+    raw: "angle",
+    path: () => `/angle`,
+    go: () => switchPath(`/angle`),
+  },
   $: {
     name: "home",
     raw: "",
@@ -112,6 +118,7 @@ export interface GenRouterTypeTree {
     | GenRouterTypeTree["ajustingPosition"]
     | GenRouterTypeTree["followWheel"]
     | GenRouterTypeTree["dropdownMenuSearch"]
+    | GenRouterTypeTree["angle"]
     | GenRouterTypeTree["$"];
   home: {
     name: "home";
@@ -181,6 +188,12 @@ export interface GenRouterTypeTree {
   };
   dropdownMenuSearch: {
     name: "dropdown-menu-search";
+    params: {};
+    query: {};
+    next: null;
+  };
+  angle: {
+    name: "angle";
     params: {};
     query: {};
     next: null;
