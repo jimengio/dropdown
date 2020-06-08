@@ -9,12 +9,11 @@ import Container from "./pages/container";
 
 import "font-awesome/css/font-awesome.min.css";
 import "./main.css";
-import { GenRouterTypeTree } from "controller/generated-router";
 
 const renderApp = () => {
-  let routerTree = parseRoutePath(window.location.hash.slice(1), routerRules) as GenRouterTypeTree["next"];
+  let routerTree = parseRoutePath(window.location.hash.slice(1), routerRules);
 
-  ReactDOM.render(<Container router={routerTree} />, document.querySelector(".app"));
+  ReactDOM.render(<Container router={routerTree as any} />, document.querySelector(".app"));
 };
 
 window.onload = renderApp;
