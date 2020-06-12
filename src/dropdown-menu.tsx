@@ -136,7 +136,7 @@ let DropdownMenu: FC<IDropdownMenuProps> = (props) => {
           return (
             <>
               {props.showSearch ? renderSearch() : null}
-              <div className={cx(center, styleEmptyList)}>{props.emptyLocale || "No data"}</div>
+              <div className={cx(center, styleEmptyList)}>{props.emptyLocale || DropdownMenu.defaultProps.emptyLocale}</div>
             </>
           );
         }
@@ -163,6 +163,10 @@ let DropdownMenu: FC<IDropdownMenuProps> = (props) => {
 };
 
 export default DropdownMenu;
+
+DropdownMenu.defaultProps = {
+  emptyLocale: "No data",
+};
 
 let styleMenu = css`
   min-height: 8px;
