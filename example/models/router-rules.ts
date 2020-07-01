@@ -38,5 +38,8 @@ export const routerRules: IRouteRule[] = [
   {
     path: "angle",
   },
+  {
+    path: "custom-theme",
+  },
   { path: "", name: "home" },
 ];

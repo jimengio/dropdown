@@ -18,6 +18,7 @@ import DemoHooksArea from "./demo-hooks-area";
 import DemoCustomTrigger from "./demo-custom-trigger";
 import DemoDropdownMenuSearch from "./demo-dropdown-menu-search";
 import DemoAngle from "./demo-angle";
+import CustomThemePage from "./demo-custom-theme";
 
 const renderChildPage = (routerTree: GenRouterTypeTree["next"]) => {
   if (routerTree != null) {
@@ -46,6 +47,8 @@ const renderChildPage = (routerTree: GenRouterTypeTree["next"]) => {
         return <DemoCustomTrigger />;
       case "angle":
         return <DemoAngle />;
+      case "custom-theme":
+        return <CustomThemePage />;
       default:
         return <HashRedirect to={genRouter.dropdownArea.path()} noDelay />;
     }
@@ -101,6 +104,10 @@ let items: ISidebarEntry[] = [
   {
     title: "Angle",
     path: genRouter.angle.name,
+  },
+  {
+    title: "Custom Theme",
+    path: genRouter.customTheme.name,
   },
 ];
 

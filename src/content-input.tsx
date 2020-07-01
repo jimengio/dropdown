@@ -3,6 +3,7 @@ import { css, cx } from "emotion";
 import FaIcon, { EFaIcon } from "@jimengio/fa-icons";
 import { rowParted, center, expand } from "@jimengio/flex-styles";
 import JimoIcon, { EJimoIcon } from "@jimengio/jimo-icons";
+import { GlobalThemeVariables } from "./theme";
 
 let ContentInput: FC<{
   content: ReactNode;
@@ -21,18 +22,26 @@ let ContentInput: FC<{
   /** Renderers */
   return (
     <div
-      className={cx(rowParted, styleContainer, props.disabled ? styleDisabled : null, props.className)}
+      className={cx(rowParted, styleContainer, GlobalThemeVariables.contentInput, props.disabled ? styleDisabled : null, props.className)}
       style={props.isActive ? { borderColor: "#3674ff" } : null}
       data-area="dropdown-input"
     >
-      <span className={cx(styleValue)}>
-        {props.content || <span className={cx(stylePlaceholder, props.placeholderClassName)}>{props.placeholder || "Please select"}</span>}
+      <span className={cx(styleValue, GlobalThemeVariables.contentInputValue)}>
+        {props.content || (
+          <span className={cx(stylePlaceholder, GlobalThemeVariables.contentInputPlaceholder, props.placeholderClassName)}>
+            {props.placeholder || "Please select"}
+          </span>
+        )}
       </span>
-      <FaIcon name={EFaIcon.AngleDown} className={styleIcon} style={props.isActive ? { transform: "rotate(180deg)" } : null} />
+      <FaIcon
+        name={EFaIcon.AngleDown}
+        className={cx(styleIcon, GlobalThemeVariables.contentInputIcon)}
+        style={props.isActive ? { transform: "rotate(180deg)" } : null}
+      />
       {props.allowClear && props.content != null ? (
         <JimoIcon
           name={EJimoIcon.slimCross}
-          className={cx(styleRemoveIcon, "allow-clear")}
+          className={cx(styleRemoveIcon, GlobalThemeVariables.contentInputRemoveIcon, "allow-clear")}
           onClick={(event) => {
             event.stopPropagation();
             if (props.onClear != null) {

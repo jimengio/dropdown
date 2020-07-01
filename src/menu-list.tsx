@@ -1,5 +1,6 @@
 import React, { FC, ReactNode } from "react";
 import { css, cx } from "emotion";
+import { GlobalThemeVariables } from "./theme";
 
 export type MenuValue = string | number;
 
@@ -22,12 +23,18 @@ let MenuList: FC<{
   /** Effects */
   /** Renderers */
   return (
-    <div className={cx(styleContainer, props.className)} data-area="dropdown-menu">
+    <div className={cx(styleContainer, GlobalThemeVariables.menuList, props.className)} data-area="dropdown-menu">
       {props.items.map((item) => {
         return (
           <div
             key={item.key || item.value}
-            className={cx(styleItem, item.value === props.value ? styleSelected : null, props.itemClassName, item.className)}
+            className={cx(
+              styleItem,
+              GlobalThemeVariables.menuListItem,
+              item.value === props.value ? cx(styleSelected, GlobalThemeVariables.menuListItemSelected) : null,
+              props.itemClassName,
+              item.className
+            )}
             onClick={() => props.onSelect(item.value, item)}
             data-action={item["data-action"] || item.key || item.value || item.title}
           >

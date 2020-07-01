@@ -93,6 +93,12 @@ export let genRouter = {
     path: () => `/angle`,
     go: () => switchPath(`/angle`),
   },
+  customTheme: {
+    name: "custom-theme",
+    raw: "custom-theme",
+    path: () => `/custom-theme`,
+    go: () => switchPath(`/custom-theme`),
+  },
   $: {
     name: "home",
     raw: "",
@@ -119,6 +125,7 @@ export interface GenRouterTypeTree {
     | GenRouterTypeTree["followWheel"]
     | GenRouterTypeTree["dropdownMenuSearch"]
     | GenRouterTypeTree["angle"]
+    | GenRouterTypeTree["customTheme"]
     | GenRouterTypeTree["$"];
   home: {
     name: "home";
@@ -194,6 +201,12 @@ export interface GenRouterTypeTree {
   };
   angle: {
     name: "angle";
+    params: {};
+    query: {};
+    next: null;
+  };
+  customTheme: {
+    name: "custom-theme";
     params: {};
     query: {};
     next: null;

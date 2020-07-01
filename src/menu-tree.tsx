@@ -4,6 +4,7 @@ import { rowMiddle, center } from "@jimengio/flex-styles";
 import FaIcon, { EFaIcon } from "@jimengio/fa-icons";
 
 import { ClampText } from "@jimengio/jimo-basics";
+import { GlobalThemeVariables } from "./theme";
 
 let countAll = (xs: IMenuTreeItem[]) => {
   if (xs == null) {
@@ -45,7 +46,7 @@ let MenuTreeItem: FC<{
   return (
     <div>
       <div
-        className={cx(rowMiddle, styleItem, props.data.disabled ? styleDisabled : null, props.itemClassName)}
+        className={cx(rowMiddle, styleItem, GlobalThemeVariables.menuTreeItem, props.data.disabled ? styleDisabled : null, props.itemClassName)}
         style={{ paddingLeft: props.level * 16 + 6 }}
         onClick={() => {
           if (props.data.disabled) {
@@ -116,7 +117,7 @@ let MenuTree: FC<{
   /** Renderers */
 
   return (
-    <div className={cx(styleContainer, props.className)}>
+    <div className={cx(styleContainer, GlobalThemeVariables.menuTree, props.className)}>
       {props.data.map((item, idx) => {
         return <MenuTreeItem key={idx} data={item} itemClassName={props.className} level={0} selected={props.selected} onChange={props.onChange} />;
       })}
