@@ -8,6 +8,7 @@ export interface IMenuListItem {
   value: MenuValue;
   title: ReactNode;
   className?: string;
+  "data-action"?: string;
 }
 
 let MenuList: FC<{
@@ -21,13 +22,14 @@ let MenuList: FC<{
   /** Effects */
   /** Renderers */
   return (
-    <div className={cx(styleContainer, props.className)}>
+    <div className={cx(styleContainer, props.className)} data-area="dropdown-menu">
       {props.items.map((item) => {
         return (
           <div
             key={item.key || item.value}
             className={cx(styleItem, item.value === props.value ? styleSelected : null, props.itemClassName, item.className)}
             onClick={() => props.onSelect(item.value, item)}
+            data-action={item["data-action"] || item.key || item.value || item.title}
           >
             {item.title}
           </div>

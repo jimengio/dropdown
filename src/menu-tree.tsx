@@ -74,7 +74,10 @@ let MenuTreeItem: FC<{
             />
           )}
         </div>
-        <div className={cx(styleDisplay, props.selected === props.data.value ? styleSelected : null)}>
+        <div
+          className={cx(styleDisplay, props.selected === props.data.value ? styleSelected : null)}
+          data-action={props.data.key || props.data.value || props.data.display}
+        >
           <ClampText text={props.data.display} addTooltip />
         </div>
       </div>

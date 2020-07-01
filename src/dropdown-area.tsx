@@ -263,6 +263,7 @@ export let useDropdownArea = (props: IUseDropdownAreaProps) => {
               left: position.left,
               ...props.cardStyle,
             }}
+            data-action="dropdown-area"
           >
             {props.title ? (
               <div className={cx(rowParted, styleHeader)}>
