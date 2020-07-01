@@ -23,6 +23,7 @@ let ContentInput: FC<{
     <div
       className={cx(rowParted, styleContainer, props.disabled ? styleDisabled : null, props.className)}
       style={props.isActive ? { borderColor: "#3674ff" } : null}
+      data-area="dropdown-input"
     >
       <span className={cx(styleValue)}>
         {props.content || <span className={cx(stylePlaceholder, props.placeholderClassName)}>{props.placeholder || "Please select"}</span>}
