@@ -12,6 +12,7 @@ import React, { FC, useEffect, useState, ReactNode, CSSProperties, useRef, Ref }
 import ReactDOM from "react-dom";
 import { rowParted, column } from "@jimengio/flex-styles";
 import { checkIfDomTreeContains } from "./dom";
+import { GlobalThemeVariables } from "./theme";
 
 type FuncVoid = () => void;
 
@@ -271,7 +272,7 @@ export let useDropdownArea = (props: IUseDropdownAreaProps) => {
               </div>
             ) : null}
             {props.hideClose ? null : (
-              <span className={styleCloseIcon} onClick={onUserClose}>
+              <span className={cx(styleCloseIcon, GlobalThemeVariables.closeIcon)} onClick={onUserClose}>
                 {getSvg("#aaa", 14, 14)}
               </span>
             )}
