@@ -146,9 +146,9 @@ export let useDropdownArea = (props: IUseDropdownAreaProps) => {
     openTimeRef.current = Date.now();
   };
 
-  let onClickClose = (event) => {
+  let onClickClose = (event: MouseEvent | React.MouseEvent) => {
     // 点击在卡片内, 不要关闭菜单
-    let insidePopCard = checkIfDomTreeContains(containerElRef.current, event.target);
+    let insidePopCard = checkIfDomTreeContains(containerElRef.current, event.target as HTMLElement);
     if (insidePopCard) {
       return;
     }
