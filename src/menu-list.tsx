@@ -48,7 +48,7 @@ let MenuList: FC<{
 
 export default MenuList;
 
-let styleContainer = null;
+let styleContainer = css``;
 
 let styleItem = css`
   padding: 8px 12px;

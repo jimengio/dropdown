@@ -107,7 +107,7 @@ let DemoDropdownMenu: FC<{}> = (props) => {
 
 export default DemoDropdownMenu;
 
-let styleContainer = null;
+let styleContainer = css``;
 
 let styleMenuArea = css`
   width: 200px;

@@ -6,7 +6,7 @@ import FaIcon, { EFaIcon } from "@jimengio/fa-icons";
 import { ClampText } from "@jimengio/jimo-basics";
 import { GlobalThemeVariables } from "./theme";
 
-let countAll = (xs: IMenuTreeItem[]) => {
+let countAll = (xs: IMenuTreeItem[]): number => {
   if (xs == null) {
     return 0;
   }
@@ -60,7 +60,7 @@ let MenuTreeItem: FC<{
           {children.length == 0 ? null : folded ? (
             <FaIcon
               name={EFaIcon.CaretRight}
-              onClick={(event) => {
+              onClick={(event: React.MouseEvent) => {
                 event.stopPropagation();
                 setFolded(false);
               }}
@@ -68,7 +68,7 @@ let MenuTreeItem: FC<{
           ) : (
             <FaIcon
               name={EFaIcon.CaretDown}
-              onClick={(event) => {
+              onClick={(event: React.MouseEvent) => {
                 event.stopPropagation();
                 setFolded(true);
               }}
