@@ -89,8 +89,8 @@ export let useDropdownArea = (props: IUseDropdownAreaProps) => {
     let cardHeight = cardEl.current.offsetHeight;
 
     // 计算过程当中, 宽度还没准确设定好, 按照设定逻辑提前计算
-    // props.width 或者按照触发元素的宽度, 但是最小值 220px
-    let cardWidth = Math.max(props.width || rect.width, 220);
+    // props.width 或者按照触发元素的宽度, 但是最小值 100px
+    let cardWidth = Math.max(props.width || rect.width, 100);
 
     // 如果计算宽度超出显示区域, 往左弹出
     let almostOut = false;
